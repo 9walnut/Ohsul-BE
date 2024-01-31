@@ -7,7 +7,7 @@ plugins {
 group = 'com.Ohsul'
 version = '0.0.1-SNAPSHOT'
 
-java {
+java {git pull
 	sourceCompatibility = '17'
 	targetCompatibility = '17'
 }
