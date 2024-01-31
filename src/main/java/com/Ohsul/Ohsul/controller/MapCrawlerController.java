@@ -16,7 +16,7 @@ public class MapCrawlerController {
   private final MapCrawlerService mapCrawlerService;
 
   @GetMapping("/v1/crawl")
-  public List<StoreDto> crawlMapStores(){
-    return mapCrawlerService.crawlMapStores();
+  public List<StoreDto> crawlMapStore(){
+    return mapCrawlerService.crawlMapStore();
   }
 }
