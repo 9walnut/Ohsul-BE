@@ -60,11 +60,11 @@ jobs:
       
       # 2. 기존의 컨테이너를 중지시킵니다
       - name: docker stop container
-        run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
+        run: sudo docker stop Ohsul-be || true
 
       # 3. 최신 이미지를 컨테이너화하여 실행시킵니다
       - name: docker run new container
-        run: sudo docker run --name Ohsul-be --rm -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/ohsul-be
+        run: sudo docker run --name Ohsul-be --network ohsul-net --rm -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/ohsul-be
 
       # 4. 미사용 이미지를 정리합니다
       - name: delete old docker image
