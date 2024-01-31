@@ -34,6 +34,8 @@ dependencies {
 	implementation 'org.seleniumhq.selenium:selenium-java:4.1.4'
 	implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.1.4'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 }
 
 tasks.named('test') {
