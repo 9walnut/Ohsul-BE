@@ -1,6 +1,6 @@
 package com.Ohsul.Ohsul.dto;
 
-
+import com.Ohsul.Ohsul.domain.Store;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

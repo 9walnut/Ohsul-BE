@@ -11,8 +11,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.time.Localdate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -46,6 +46,10 @@ public class MapCrawlerService {
 
       System.out.println("title = " + title);
       System.out.println("link = " + link);
+
+      WebElement dateElement = storeElement.findElement(By.cssSelector("td:nth-child(2)"));
+      String dateText = dateElement.getText();
+      LocalDate date = LocalDate.parse(dateText, DateTimeFormatter.ofPattern("yyyy.MM.dd"));
 
       Store store = Store.builder().title(title).link(link).date(date).build();
 
