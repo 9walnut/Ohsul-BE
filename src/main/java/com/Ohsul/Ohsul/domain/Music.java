@@ -1,8 +1,8 @@
 package com.Ohsul.Ohsul.domain;
 
+import com.Ohsul.Ohsul.entity.Bar;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
@@ -10,8 +10,9 @@ import lombok.Setter;
 @Table(name = "music")
 public class Music {
   @Id
-  @Column(name = "musicId")
-  private int musicId;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer musicId;
+  private String musicType;
 
   @ManyToOne
   @JoinColumn(name = "barId")

@@ -1,20 +1,20 @@
 package com.Ohsul.Ohsul.domain;
 
+import com.Ohsul.Ohsul.entity.Bar;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "alcohol")
+@Table(name="alcohol")
 public class Alcohol {
   @Id
-  @Column(name = "alcoholId")
-  private int alcoholId;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer alcoholId;
+  private String alcoholType;
 
   @ManyToOne
   @JoinColumn(name = "barId")
   private Bar bar;
-
 }
