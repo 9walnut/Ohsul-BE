@@ -1,5 +1,6 @@
-package com.Ohsul.Ohsul.entity;
+package com.Ohsul.Ohsul.domain;
 
+import com.Ohsul.Ohsul.entity.Bar;
 import jakarta.persistence.*;
 import lombok.*;
 
