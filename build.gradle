@@ -23,6 +23,12 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-security' // SpringSecurity 의존성
+
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // Validation 의존성
+	testImplementation 'org.springframework.security:spring-security-test'  //테스트시 사용되는 의존성
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter'
@@ -32,12 +38,17 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'org.seleniumhq.selenium:selenium-java:4.1.4'
-	implementation 'org.seleniumhq.selenium:selenium-chrome-driver:4.1.4'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.2'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+	// jwt (maybe?)
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	implementation 'org.slf4j:slf4j-api' // slf4j 관련 패키지 의존성
 }
 
 tasks.named('test') {
