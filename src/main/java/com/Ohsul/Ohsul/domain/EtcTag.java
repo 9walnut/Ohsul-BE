@@ -14,7 +14,6 @@ public class EtcTag {
   private Integer etcTagId;
   private String toilet;
   private String parkingArea;
-  private String snackGood;
 
   @ManyToOne
   @JoinColumn(name = "barId")
