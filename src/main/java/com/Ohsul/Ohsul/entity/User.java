@@ -3,17 +3,19 @@ package com.Ohsul.Ohsul.entity;
 import com.Ohsul.Ohsul.domain.Favorite;
 import com.Ohsul.Ohsul.domain.Review;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.security.core.userdetails.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
-@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user")
-public class User {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userNumber;
