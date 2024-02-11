@@ -7,7 +7,9 @@ import javax.swing.text.html.*;
 import java.util.*;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-  boolean existsByLoginId(String userId);
+  boolean existsByUserId(String userId);
   boolean existsByNickname(String nickname);
-  Optional<User> findByLoginId(String userId);
+  Optional<User> findByUserNumber(Integer userNumber);
+  Optional<User> findByUserId(String userId);
+
 }
