@@ -15,13 +15,13 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserService {
   private UserRepository userRepository;
-  // sprimg security를 사용한 로그인 구현
+  // spring security 를 사용한 로그인 구현
   private final BCryptPasswordEncoder encoder;
 
   // userId 중복체크
   // 종복되면 true return
   public boolean checkLoginIdDuplicate(String userId){
-    return userRepository.existsByLoginId(userId);
+    return userRepository.existsByUserId(userId);
   }
 
   // 닉네임 중복체크
@@ -30,13 +30,13 @@ public class UserService {
   }
 
   // 회원가입 - 암호화
-  public void join(JoinRequest req){
+  public void registerUser(RegisterRequest req){
     userRepository.save(req.toEntity(encoder.encode(req.getUserPw())));
   }
 
   // 로그인
   public User login(LoginRequest req){
-    Optional<User> optionalUser = userRepository.findByLoginId(req.getUserId());
+    Optional<User> optionalUser = userRepository.findByUserId(req.getUserId());
 
     // 일치하는 user 없을 시 null
     if (optionalUser.isEmpty()){
