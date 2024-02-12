@@ -34,29 +34,5 @@ public class UserController {
   // 로그아웃 요청
 
 
-  // 회원가입 페이지
-//  @GetMapping("/register")
-//  public String disRegister(){
-//    return "/register";
-//  }
 
-  // 회원가입 요청
-  @PostMapping("/register")
-  public ResponseEntity<?> registerUser(@RequestBody RegisterRequest req){
-    userService.registerUser(req);
-    return new ResponseEntity<>("회원가입 성공", HttpStatus.CREATED);
-  }
-
-  // 아이디 중복 확인
-  @PostMapping("/register/userIdCheck")
-  public ResponseEntity<?> checkUserIdDuplicate(@RequestBody UserIdCheckRequest req) {
-    boolean result = userService.checkLoginIdDuplicate(req.getUserId());
-    return new ResponseEntity<>(result, HttpStatus.OK);
-  }
-  // 닉네임 중복 확인
-  @PostMapping("/register/userNicknameCheck")
-  public ResponseEntity<?> checkNicknameDuplicate(@RequestBody UserNicknameCheckRequest req) {
-    boolean result = userService.checkNicknameDuplicate(req.getUserNickname());
-    return new ResponseEntity<>(result, HttpStatus.OK);
-  }
 }

@@ -1,10 +1,12 @@
 package com.Ohsul.Ohsul.service;
 
 import com.Ohsul.Ohsul.dto.*;
-import com.Ohsul.Ohsul.entity.*;
+
+import com.Ohsul.Ohsul.entity.User;
 import com.Ohsul.Ohsul.repository.*;
 import jakarta.transaction.*;
 import lombok.*;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.stereotype.*;
 
@@ -18,21 +20,11 @@ public class UserService {
   // spring security 를 사용한 로그인 구현
   private final BCryptPasswordEncoder encoder;
 
-  // userId 중복체크
-  // 종복되면 true return
-  public boolean checkLoginIdDuplicate(String userId){
-    return userRepository.existsByUserId(userId);
-  }
 
-  // 닉네임 중복체크
-  public boolean checkNicknameDuplicate(String userNickname){
-    return userRepository.existsByNickname(userNickname);
-  }
-
-  // 회원가입 - 암호화
-  public void registerUser(RegisterRequest req){
-    userRepository.save(req.toEntity(encoder.encode(req.getUserPw())));
-  }
+  //
+//  public  findOne(String userId){
+//    return userRepository.findByUserId(userId);
+//  }
 
   // 로그인
   public User login(LoginRequest req){
@@ -49,4 +41,16 @@ public class UserService {
     }
     return user;
   }
+
+//  @Override
+//  public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException{
+//    User user = userRepository.findByUserId(userId);
+//    if(user == null){
+//      throw new UsernameNotFoundException(userId);
+//    }
+//    return User.builder()
+//            .userId(user.getUserId())
+//            .userPw(user.getUserPw())
+//            .build();
+//  }
 }
