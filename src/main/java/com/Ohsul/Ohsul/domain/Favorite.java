@@ -1,7 +1,7 @@
 package com.Ohsul.Ohsul.domain;
 
-import com.Ohsul.Ohsul.entity.Bar;
-import com.Ohsul.Ohsul.entity.User;
+import com.Ohsul.Ohsul.entity.BarEntity;
+import com.Ohsul.Ohsul.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,11 +15,11 @@ public class Favorite {
     @Id
     @ManyToOne
     @JoinColumn(name = "barId")
-    private Bar bar;
+    private BarEntity barEntity;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "userNumber")
-    private User user;
+    private UserEntity userEntity;
 }
 

@@ -6,31 +6,38 @@ import com.Ohsul.Ohsul.service.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
-import org.springframework.stereotype.*;
+import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/login")
 public class UserController {
-  private final UserService userService;
+  @Autowired
+  UserService userService;
+  @Autowired
+  BCryptPasswordEncoder passwordEncoder;
 
   // 로그인 페이지
-  @GetMapping("/")
+  @GetMapping("/login")
   public String getLogin(){
     return "GET /login";
   }
+
   // 로그인 요청
-  // 쿠키? 세션? jwt? 정해야 진행이 있을 것 같습니다
-  @PostMapping("/")
-  public ResponseEntity<?> loginUser(@RequestBody LoginRequest req) {
+  @PostMapping("/login")
+  public ResponseEntity<?> loginUser(@RequestBody UserDTO userDTO) {
     try{
-      User user = userService.login(req);
+      UserEntity user = userService.login(userDTO.getUserId(), userDTO.getUserPw());
 
       if(user == null) {
-        return new ResponseEntity<>("로그인 실패", HttpStatus.UNAUTHORIZED);
+        throw new RuntimeException("login failed");
       }
-      return new ResponseEntity<>(user, HttpStatus.OK);
+      UserDTO responseUserDTO = UserDTO.builder()
+              .userId(user.getUserId())
+              .userName(user.getUserName())
+              .userNickname(user.getUserNickname())
+              .build();
+      return ResponseEntity.ok().body(responseUserDTO);
     } catch (Exception e){
       return ResponseEntity.badRequest().body(e.getMessage());
     }
@@ -39,6 +46,43 @@ public class UserController {
 
   // 로그아웃 요청
 
+  // 회원가입 페이지
+  @GetMapping("/register")
+  public String getRegister(){
+    return "/register";
+  }
 
-
+  // 회원가입 요청
+  @PostMapping("/register")
+  public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO){
+    try{
+      UserEntity user = UserEntity.builder()
+              .userId(userDTO.getUserId())
+              .userName(userDTO.getUserName())
+              .userNickname(userDTO.getUserNickname())
+              .userPw(passwordEncoder.encode(userDTO.getUserPw()))
+              .build();
+      UserEntity responseUser = userService.registerUser(user);
+      UserDTO responseuserDTO = UserDTO.builder()
+              .userId(responseUser.getUserId())
+              .userName(responseUser.getUserName())
+              .userNickname(responseUser.getUserNickname())
+              .build();
+      return ResponseEntity.ok().body(responseuserDTO);
+    } catch (Exception e){
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
+  // 아이디 중복 확인
+  @PostMapping("/register/userIdCheck")
+  public ResponseEntity<?> checkUserIdDuplicate(@RequestBody UserIdCheckDTO req) {
+    boolean result = userService.checkLoginIdDuplicate(req.getUserId());
+    return new ResponseEntity<>(result, HttpStatus.OK);
+  }
+  // 닉네임 중복 확인
+  @PostMapping("/register/userNicknameCheck")
+  public ResponseEntity<?> checkNicknameDuplicate(@RequestBody UserNicknameCheckDTO req) {
+    boolean result = userService.checkNicknameDuplicate(req.getUserNickname());
+    return new ResponseEntity<>(result, HttpStatus.OK);
+  }
 }

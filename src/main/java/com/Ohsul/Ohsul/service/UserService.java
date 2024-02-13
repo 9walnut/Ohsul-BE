@@ -1,13 +1,13 @@
 package com.Ohsul.Ohsul.service;
 
+import com.Ohsul.Ohsul.domain.*;
 import com.Ohsul.Ohsul.dto.*;
 
-import com.Ohsul.Ohsul.entity.User;
+import com.Ohsul.Ohsul.entity.UserEntity;
 import com.Ohsul.Ohsul.repository.*;
 import jakarta.transaction.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.stereotype.*;
 
@@ -18,44 +18,47 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserService {
   private UserRepository userRepository;
-  // spring security 를 사용한 로그인 구현
-  private BCryptPasswordEncoder encoder;
-
-
   @Autowired
-  public UserService(UserRepository userRepository){
-    this.userRepository = userRepository;
-  }
+  BCryptPasswordEncoder passwordEncoder;
 
-  public  Optional<com.Ohsul.Ohsul.entity.User> findOne(String userId){
-    return userRepository.findByUserId(userId);
-  }
+//  public  Optional<UserEntity> findOne(String userId){
+//    return userRepository.findByUserId(userId);
+//  }
 
   // 로그인
-  public User login(LoginRequest req){
-    Optional<com.Ohsul.Ohsul.entity.User> optionalUser = userRepository.findByUserId(req.getUserId());
+  public UserEntity login(String userId, String userPw){
+    UserEntity searchUser = userRepository.findByUserId(userId);
 
     // 일치하는 user 없을 시 null
-    if (optionalUser.isEmpty()){
-      return null;
-    }
-    com.Ohsul.Ohsul.entity.User user = optionalUser.get();
+    if (searchUser != null && passwordEncoder.matches(userPw, searchUser.getUserPw())) {
 
-    if(!user.getUserPw().equals(req.getUserPw())){
-      return null;
+      return searchUser;
     }
-    return user;
+    return null;
+  }
+ // 회원가입
+  public UserEntity registerUser(UserEntity userEntity){
+    if(userEntity == null){
+      throw new RuntimeException("entity null");
+    }
+    // 중복 아이디 불가
+    String id = userEntity.getUserId();
+
+    if(userRepository.existsByUserId(userEntity.getUserId())){
+      throw new RuntimeException("이미 존재하는 아이디입니다");
+    }
+    return userRepository.save(userEntity);
   }
 
-//  @Override
-//  public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException{
-//    User user = userRepository.findByUserId(userId);
-//    if(user == null){
-//      throw new UsernameNotFoundException(userId);
-//    }
-//    return User.builder()
-//            .userId(user.getUserId())
-//            .userPw(user.getUserPw())
-//            .build();
-//  }
+  // 아이디 중복 체크
+  public boolean checkLoginIdDuplicate(String userId){
+    return userRepository.existsByUserId(userId);
+  }
+
+  // 닉네임 중복체크
+  public boolean checkNicknameDuplicate(String userNickname){
+    return userRepository.existsByNickname(userNickname);
+  }
+
+
 }

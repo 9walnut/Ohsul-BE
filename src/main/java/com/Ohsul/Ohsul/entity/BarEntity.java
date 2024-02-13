@@ -9,7 +9,7 @@ import java.util.*;
 @Getter
 @Setter
 @Table(name = "bar")
-public class Bar {
+public class BarEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer barId;

@@ -4,6 +4,6 @@ import lombok.*;
 
 @Getter
 @Setter
-public class UserNicknameCheckRequest {
+public class UserNicknameCheckDTO {
   private String userNickname;
 }

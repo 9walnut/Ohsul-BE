@@ -1,7 +1,7 @@
 package com.Ohsul.Ohsul.domain;
 
-import com.Ohsul.Ohsul.entity.Bar;
-import com.Ohsul.Ohsul.entity.User;
+import com.Ohsul.Ohsul.entity.BarEntity;
+import com.Ohsul.Ohsul.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,9 +20,9 @@ public class Review {
 
   @ManyToOne
   @JoinColumn(name = "barId")
-  private Bar bar;
+  private BarEntity barEntity;
 
   @ManyToOne
   @JoinColumn(name = "userNumber")
-  private User user;
+  private UserEntity userEntity;
 }

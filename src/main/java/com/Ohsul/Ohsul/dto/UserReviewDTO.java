@@ -7,7 +7,7 @@ import java.util.*;
 
 @Getter
 @Setter
-public class UserReviewRequest {
+public class UserReviewDTO {
   private String userId;
   private String userName;
   private String userNickname;
