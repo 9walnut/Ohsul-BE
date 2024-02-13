@@ -17,10 +17,10 @@ public class RegisterController {
     this.registerService = registerService;
   }
   // 회원가입 페이지
-//  @GetMapping("/register")
-//  public String disRegister(){
-//    return "/register";
-//  }
+  @GetMapping("/register")
+  public String disRegister(){
+    return "/register";
+  }
 
   // 회원가입 요청
   @PostMapping("")

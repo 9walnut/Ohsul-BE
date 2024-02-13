@@ -11,24 +11,30 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/")
+@RequestMapping("/api/login")
 public class UserController {
   private final UserService userService;
 
   // 로그인 페이지
-//  @GetMapping("/login")
-//  public String disLogin(){
-//    return "/login";
-//  }
+  @GetMapping("/")
+  public String getLogin(){
+    return "GET /login";
+  }
   // 로그인 요청
   // 쿠키? 세션? jwt? 정해야 진행이 있을 것 같습니다
-  @PostMapping("/login")
+  @PostMapping("/")
   public ResponseEntity<?> loginUser(@RequestBody LoginRequest req) {
-    User user = userService.login(req);
-    if(user == null) {
-      return new ResponseEntity<>("로그인 실패", HttpStatus.UNAUTHORIZED);
+    try{
+      User user = userService.login(req);
+
+      if(user == null) {
+        return new ResponseEntity<>("로그인 실패", HttpStatus.UNAUTHORIZED);
+      }
+      return new ResponseEntity<>(user, HttpStatus.OK);
+    } catch (Exception e){
+      return ResponseEntity.badRequest().body(e.getMessage());
     }
-    return new ResponseEntity<>(user, HttpStatus.OK);
+
   }
 
   // 로그아웃 요청
