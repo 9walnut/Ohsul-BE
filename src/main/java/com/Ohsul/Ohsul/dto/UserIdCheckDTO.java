@@ -4,6 +4,6 @@ import lombok.*;
 
 @Getter
 @Setter
-public class UserIdCheckRequest {
+public class UserIdCheckDTO {
   private String userId;
 }

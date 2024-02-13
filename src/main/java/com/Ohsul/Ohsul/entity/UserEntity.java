@@ -4,7 +4,6 @@ import com.Ohsul.Ohsul.domain.Favorite;
 import com.Ohsul.Ohsul.domain.Review;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.userdetails.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
-public class User  {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userNumber;
@@ -37,4 +36,16 @@ public class User  {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Favorite> favorites = new ArrayList<>();
+
+    public void changeUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void changeUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public void changeUserPw(String userPw) {
+        this.userPw = userPw;
+    }
 }

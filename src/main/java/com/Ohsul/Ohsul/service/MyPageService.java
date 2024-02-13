@@ -1,7 +1,7 @@
 package com.Ohsul.Ohsul.service;
 
 import com.Ohsul.Ohsul.dto.*;
-import com.Ohsul.Ohsul.entity.User;
+import com.Ohsul.Ohsul.entity.UserEntity;
 import com.Ohsul.Ohsul.repository.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.userdetails.*;
@@ -16,51 +16,56 @@ public class MyPageService {
     this.userRepository = userRepository;
   }
 
-  public UserProfileRequest getUserProfile(String userId) {
-    User user = userRepository.findByUserId(userId)
-            .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userId));
+  public UserFavoriteDTO getUserProfile(Integer userNumber) {
+    UserEntity userEntity = userRepository.findByUserNumber(userNumber)
+            .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userNumber));
 
-    if (user == null) {
-      throw new UsernameNotFoundException("유저가 없습니다 : " + userId);
+    if (userEntity == null) {
+      throw new UsernameNotFoundException("유저가 없습니다 : " + userNumber);
     }
 
-    UserProfileRequest userProfile = new UserProfileRequest();
-    userProfile.setUserId(user.getUserId());
-    userProfile.setUserName(user.getUserName());
-    userProfile.setUserNickname(user.getUserNickname());
-    userProfile.setFavorites(user.getFavorites());
+    UserFavoriteDTO userProfile = new UserFavoriteDTO();
+    userProfile.setUserId(userEntity.getUserId());
+    userProfile.setUserName(userEntity.getUserName());
+    userProfile.setUserNickname(userEntity.getUserNickname());
+    userProfile.setFavorites(userEntity.getFavorites());
 
     return userProfile;
   }
 
   // 단순 데이터 전달 목적으로 Setter 사용
-  public UserProfileRequest getUserProfileInfo(String userId){
-    User user = userRepository.findByUserId(userId)
-            .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userId));
+  public UserFavoriteDTO getUserProfileInfo(Integer userNumber){
+    UserEntity userEntity = userRepository.findByUserNumber(userNumber)
+            .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userNumber));
 
-    if (user == null) {
-      throw new UsernameNotFoundException("유저가 없습니다 : " + userId);
+    if (userEntity == null) {
+      throw new UsernameNotFoundException("유저가 없습니다 : " + userNumber);
     }
 
-    UserProfileRequest userProfileInfo = new UserProfileRequest();
-    userProfileInfo.setUserId(user.getUserId());
-    userProfileInfo.setUserName(user.getUserName());
-    userProfileInfo.setUserNickname(user.getUserNickname());
+    UserFavoriteDTO userProfileInfo = new UserFavoriteDTO();
+    userProfileInfo.setUserId(userEntity.getUserId());
+    userProfileInfo.setUserName(userEntity.getUserName());
+    userProfileInfo.setUserNickname(userEntity.getUserNickname());
 
     return userProfileInfo;
   }
 
   public void deleteUser(Integer userNumber) {
-    User user = userRepository.findByUserNumber(userNumber)
+    UserEntity userEntity = userRepository.findByUserNumber(userNumber)
             .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userNumber));
-    userRepository.delete(user);
+    userRepository.delete(userEntity);
   }
 
-  public void updateUserProfile(UserProfileRequest userProfileRequest){
-    User user = userRepository.findByUserId(userProfileRequest.getUserId())
+  public void updateUserProfile(UserFavoriteDTO userFavoriteDTO){
+    UserEntity userEntity = userRepository.findByUserNumber(userFavoriteDTO.getUserNumber())
             .orElseThrow(()->new NoSuchElementException("유저가 없습니다"));
-    User updateUser = User.builder().userPw(user.getUserPw()).userName(user.getUserName()).userNickname(user.getUserNickname())
-            .build();
-    userRepository.save(updateUser);
+
+    // 받아온 DTO에서 값을 가져와서 업데이트
+    userEntity.changeUserName(userFavoriteDTO.getUserName());
+    userEntity.changeUserNickname(userFavoriteDTO.getUserNickname());
+    userEntity.changeUserPw(userFavoriteDTO.getUserPw()); // 비밀번호 변경 시 암호화 필요
+
+
+    userRepository.save(userEntity);
   }
 }

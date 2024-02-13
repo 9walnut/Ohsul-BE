@@ -1,6 +1,6 @@
 package com.Ohsul.Ohsul.domain;
 
-import com.Ohsul.Ohsul.entity.Bar;
+import com.Ohsul.Ohsul.entity.BarEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,5 +18,5 @@ public class Snack {
 
     @ManyToOne
     @JoinColumn(name = "barId")
-    private Bar bar;
+    private BarEntity barEntity;
 }

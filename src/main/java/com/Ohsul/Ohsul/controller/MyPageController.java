@@ -14,20 +14,20 @@ public class MyPageController {
 
   // 마이페이지 렌더링
   @GetMapping("")
-  public ResponseEntity<?> getUserProfile(@RequestParam String userId) {
-    UserProfileRequest userProfile = myPageService.getUserProfile(userId);
+  public ResponseEntity<?> getUserProfile(@RequestParam Integer userNumber) {
+    UserFavoriteDTO userProfile = myPageService.getUserProfile(userNumber);
     return new ResponseEntity<>(userProfile, HttpStatus.OK);
   }
 
   // 마이페이지 내 정보 조회
   @GetMapping("/info")
-  public ResponseEntity<?> getUserProfileInfo(@RequestParam String userId){
-    UserProfileRequest userProfileInfo = myPageService.getUserProfileInfo(userId);
+  public ResponseEntity<?> getUserProfileInfo(@RequestParam Integer userNumber){
+    UserFavoriteDTO userProfileInfo = myPageService.getUserProfileInfo(userNumber);
     return new ResponseEntity<>(userProfileInfo, HttpStatus.OK);
   }
 
   // 회원 탈퇴
-  @DeleteMapping("/{userId}")
+  @DeleteMapping("/{userNumber}")
   public ResponseEntity<String> deleteUser(@PathVariable Integer userNumber) {
     myPageService.deleteUser(userNumber);
     return new ResponseEntity<>("회원 탈퇴 완료", HttpStatus.OK);
@@ -35,8 +35,8 @@ public class MyPageController {
 
   // 내 정보 수정
   @PatchMapping("/info")
-  public void updateUserProfile(@RequestBody UserProfileRequest userProfileRequest){
-    myPageService.updateUserProfile(userProfileRequest);
+  public void updateUserProfile(@RequestBody UserFavoriteDTO userFavoriteDTO){
+    myPageService.updateUserProfile(userFavoriteDTO);
   }
 
   // 즐겨찾기
