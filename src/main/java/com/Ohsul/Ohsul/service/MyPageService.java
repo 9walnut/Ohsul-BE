@@ -16,6 +16,8 @@ public class MyPageService {
     this.userRepository = userRepository;
   }
 
+  // 마이페이지 메인
+  // 즐겨찾기 버튼 혼용 중
   public UserFavoriteDTO getUserProfile(Integer userNumber) {
     UserEntity userEntity = userRepository.findByUserNumber(userNumber)
             .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userNumber));
@@ -67,5 +69,22 @@ public class MyPageService {
 
 
     userRepository.save(userEntity);
+  }
+
+  // 즐겨찾기
+  public UserReviewDTO getUserReview(Integer userNumber){
+    UserEntity userEntity = userRepository.findByUserNumber(userNumber)
+            .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userNumber));
+
+    if (userEntity == null) {
+      throw new UsernameNotFoundException("유저가 없습니다 : " + userNumber);
+    }
+
+    UserReviewDTO userReivew = new UserReviewDTO();
+    userReivew.setUserId(userEntity.getUserId());
+    userReivew.setUserName(userEntity.getUserName());
+    userReivew.setUserNickname(userEntity.getUserNickname());
+
+    return userReivew;
   }
 }

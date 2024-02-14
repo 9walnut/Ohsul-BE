@@ -3,6 +3,7 @@ package com.Ohsul.Ohsul.controller;
 import com.Ohsul.Ohsul.dto.*;
 import com.Ohsul.Ohsul.entity.*;
 import com.Ohsul.Ohsul.service.*;
+import jakarta.servlet.http.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
@@ -25,7 +26,7 @@ public class UserController {
 
   // 로그인 요청
   @PostMapping("/login")
-  public ResponseEntity<?> loginUser(@RequestBody UserDTO userDTO) {
+  public ResponseEntity<?> loginUser(HttpSession session ,@RequestBody UserDTO userDTO) {
     try{
       UserEntity user = userService.login(userDTO.getUserId(), userDTO.getUserPw());
 
@@ -37,14 +38,28 @@ public class UserController {
               .userName(user.getUserName())
               .userNickname(user.getUserNickname())
               .build();
+      session.setAttribute("userId", user.getUserId());
       return ResponseEntity.ok().body(responseUserDTO);
     } catch (Exception e){
       return ResponseEntity.badRequest().body(e.getMessage());
     }
-
   }
 
   // 로그아웃 요청
+  @PostMapping("/logout")
+  public ResponseEntity<?> logoutUser(HttpServletRequest request) {
+    try {
+      // 세션 가져오기
+      HttpSession session = request.getSession(false);
+      // 세션이 존재하면 무효화
+      if (session != null) {
+        session.invalidate();
+      }
+      return ResponseEntity.ok().body("Logout successful");
+    } catch (Exception e) {
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
 
   // 회원가입 페이지
   @GetMapping("/register")
