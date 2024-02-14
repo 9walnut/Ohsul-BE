@@ -1,15 +1,19 @@
 package com.Ohsul.Ohsul.domain;
 
+import jakarta.persistence.Column;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
 @Getter
-@Setter
 public class Bar {
-
-    @Id
-    private String id;
-    private String name;
-    private int value;
+    private Integer barId;
+    private String barName;
+    private String roadAddress;
+    private String localAddress;
+    private String description;
+    private String telephone;
+    private String barImg;
+    private Boolean snack;
+    private Boolean toilet;
+    private Boolean parkingArea;
 }

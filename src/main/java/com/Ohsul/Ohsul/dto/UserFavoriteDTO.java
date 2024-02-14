@@ -1,6 +1,6 @@
 package com.Ohsul.Ohsul.dto;
 
-import com.Ohsul.Ohsul.domain.*;
+import com.Ohsul.Ohsul.entity.FavoriteEntity;
 import lombok.*;
 
 import java.util.*;
@@ -14,5 +14,5 @@ public class UserFavoriteDTO {
   private String userName;
   private String userNickname;
   private String userPw;
-  private List<Favorite> favorites;
+  private List<FavoriteEntity> favorites;
 }

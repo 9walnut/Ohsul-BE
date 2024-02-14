@@ -1,6 +1,6 @@
 package com.Ohsul.Ohsul.dto;
 
-import com.Ohsul.Ohsul.domain.*;
+import com.Ohsul.Ohsul.entity.ReviewEntity;
 import lombok.*;
 
 import java.util.*;
@@ -11,6 +11,6 @@ public class UserReviewDTO {
   private String userId;
   private String userName;
   private String userNickname;
-  private List<Review> reviews;
+  private List<ReviewEntity> reviews;
 
 }

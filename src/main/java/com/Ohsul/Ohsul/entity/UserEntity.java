@@ -1,7 +1,5 @@
 package com.Ohsul.Ohsul.entity;
 
-import com.Ohsul.Ohsul.domain.Favorite;
-import com.Ohsul.Ohsul.domain.Review;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,18 +22,16 @@ public class UserEntity {
 
     @Column(name = "userPw", nullable = false)
     private String userPw;
-    @Column(name = "salt", nullable = false)
-    private String salt;
     @Column(name = "userName", nullable = false, length = 20)
     private String userName;
     @Column(name = "userNickname", nullable = false, length = 50)
     private String userNickname;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Review> reviews = new ArrayList<>();
+    private List<ReviewEntity> reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Favorite> favorites = new ArrayList<>();
+    private List<FavoriteEntity> favorites = new ArrayList<>();
 
     public void changeUserName(String userName) {
         this.userName = userName;
