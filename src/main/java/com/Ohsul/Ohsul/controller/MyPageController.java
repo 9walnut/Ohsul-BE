@@ -39,9 +39,19 @@ public class MyPageController {
     myPageService.updateUserProfile(userFavoriteDTO);
   }
 
-  // 즐겨찾기
+  // 즐겨찾기 버튼
+  @GetMapping("/favorite")
+  public ResponseEntity<?> getFavorite(@RequestParam Integer userNumber){
+    UserFavoriteDTO userFavorite = myPageService.getUserProfile(userNumber);
+    return new ResponseEntity<>(userFavorite, HttpStatus.OK);
+  }
 
   // 작성한 리뷰
+  @GetMapping("/myReview")
+  public ResponseEntity<?> getMyReview(@RequestParam Integer userNumber){
+    UserReviewDTO userReview = myPageService.getUserReview(userNumber);
+    return new ResponseEntity<>(userReview, HttpStatus.OK);
+  }
 
   // 리뷰 수정
 
