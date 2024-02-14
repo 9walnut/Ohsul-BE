@@ -1,6 +1,5 @@
 package com.Ohsul.Ohsul.entity;
 
-import com.Ohsul.Ohsul.domain.*;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.*;
@@ -31,24 +30,27 @@ public class BarEntity {
   @Column(name = "barImg")
   private String barImg;
 
-  @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL)
-  private List<Mood> moods = new ArrayList<>();
+  @Column(name = "snack")
+  private Boolean snack;
+
+  @Column(name = "toilet")
+  private Boolean toilet;
+
+  @Column(name = "parkingArea")
+  private Boolean parkingArea;
 
   @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL)
-  private List<Alcohol> alcohols = new ArrayList<>();
+  private List<ReviewEntity> reviews = new ArrayList<>();
 
   @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL)
-  private List<Music> musics = new ArrayList<>();
+  private List<FavoriteEntity> favorites = new ArrayList<>();
 
   @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL)
-  private List<Review> reviews = new ArrayList<>();
+  private List<BarAlcoholEntity> barAlcohols = new ArrayList<>();
 
   @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL)
-  private List<EtcTag> etcTags = new ArrayList<>();
+  private List<BarMusicEntity> barMusics = new ArrayList<>();
 
   @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL)
-  private List<Snack> snacks = new ArrayList<>();
-
-  @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL)
-  private List<Favorite> favorites = new ArrayList<>();
+  private List<BarMoodEntity> barMoods = new ArrayList<>();
 }

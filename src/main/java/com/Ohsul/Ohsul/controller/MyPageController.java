@@ -3,6 +3,7 @@ package com.Ohsul.Ohsul.controller;
 import com.Ohsul.Ohsul.dto.*;
 import com.Ohsul.Ohsul.service.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/mypage")
 public class MyPageController {
+
   private final MyPageService myPageService;
 
   // 마이페이지 렌더링

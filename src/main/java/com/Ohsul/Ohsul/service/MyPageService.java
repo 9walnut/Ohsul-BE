@@ -5,9 +5,11 @@ import com.Ohsul.Ohsul.entity.UserEntity;
 import com.Ohsul.Ohsul.repository.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.userdetails.*;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class MyPageService {
   private final UserRepository userRepository;
 

@@ -8,7 +8,7 @@ import java.util.*;
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
   boolean existsByUserId(String userId);
-  boolean existsByNickname(String nickname);
+  boolean existsByUserNickname(String userNickname);
   UserEntity findByUserId(String userId);
 
   Optional<UserEntity> findByUserNumber(Integer userNumber);
