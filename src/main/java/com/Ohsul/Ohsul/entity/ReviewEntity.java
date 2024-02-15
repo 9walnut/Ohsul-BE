@@ -19,7 +19,7 @@ public class ReviewEntity {
     private String content;
 
     @Column(name = "score", nullable = false, length = 1)
-    private Float score;
+    private Integer score;
 
     @Column(name = "reviewImg")
     private String reviewImg;
@@ -34,7 +34,8 @@ public class ReviewEntity {
     @JoinColumn(name = "barId")
     private BarEntity bar;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "userNumber")
     private UserEntity user;
+
 }

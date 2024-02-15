@@ -24,4 +24,8 @@ public class BarMoodEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "barId")
     private BarEntity bar;
+
+    @ManyToOne
+    @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
+    private ReviewEntity review;
 }
