@@ -5,19 +5,20 @@ import com.Ohsul.Ohsul.service.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/mypage")
+@RequestMapping("/mypage")
 public class MyPageController {
 
   private final MyPageService myPageService;
 
   // 마이페이지 렌더링
   @GetMapping("")
-  public ResponseEntity<?> getUserProfile(@RequestParam Integer userNumber) {
-    UserFavoriteDTO userProfile = myPageService.getUserProfile(userNumber);
+  public ResponseEntity<?> getUserProfile(@AuthenticationPrincipal String userId) {
+    UserFavoriteDTO userProfile = myPageService.getUserProfile(userId);
     return new ResponseEntity<>(userProfile, HttpStatus.OK);
   }
 
@@ -29,9 +30,9 @@ public class MyPageController {
   }
 
   // 회원 탈퇴
-  @DeleteMapping("/{userNumber}")
-  public ResponseEntity<String> deleteUser(@PathVariable Integer userNumber) {
-    myPageService.deleteUser(userNumber);
+  @DeleteMapping("/")
+  public ResponseEntity<String> deleteUser(@AuthenticationPrincipal String userId) {
+    myPageService.deleteUser(userId);
     return new ResponseEntity<>("회원 탈퇴 완료", HttpStatus.OK);
   }
 
@@ -43,8 +44,8 @@ public class MyPageController {
 
   // 즐겨찾기 버튼
   @GetMapping("/favorite")
-  public ResponseEntity<?> getFavorite(@RequestParam Integer userNumber){
-    UserFavoriteDTO userFavorite = myPageService.getUserProfile(userNumber);
+  public ResponseEntity<?> getFavorite(@AuthenticationPrincipal String userId){
+    UserFavoriteDTO userFavorite = myPageService.getUserProfile(userId);
     return new ResponseEntity<>(userFavorite, HttpStatus.OK);
   }
 

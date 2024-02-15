@@ -46,20 +46,21 @@ public class UserController {
   }
 
   // 로그아웃 요청
-  @PostMapping("/logout")
-  public ResponseEntity<?> logoutUser(HttpServletRequest request) {
-    try {
-      // 세션 가져오기
-      HttpSession session = request.getSession(false);
-      // 세션이 존재하면 무효화
-      if (session != null) {
-        session.invalidate();
-      }
-      return ResponseEntity.ok().body("Logout successful");
-    } catch (Exception e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
-    }
-  }
+//   SecurityConfig로 대체
+//  @PostMapping("/logout")
+//  public ResponseEntity<?> logoutUser(HttpServletRequest request) {
+//    try {
+//      // 세션 가져오기
+//      HttpSession session = request.getSession(false);
+//      // 세션이 존재하면 무효화
+//      if (session != null) {
+//        session.invalidate();
+//      }
+//      return ResponseEntity.ok().body("Logout successful");
+//    } catch (Exception e) {
+//      return ResponseEntity.badRequest().body(e.getMessage());
+//    }
+//  }
 
   // 회원가입 페이지
   @GetMapping("/register")
@@ -73,15 +74,16 @@ public class UserController {
     try{
       UserEntity user = UserEntity.builder()
               .userId(userDTO.getUserId())
+              .userPw(passwordEncoder.encode(userDTO.getUserPw()))
               .userName(userDTO.getUserName())
               .userNickname(userDTO.getUserNickname())
-              .userPw(passwordEncoder.encode(userDTO.getUserPw()))
               .build();
       UserEntity responseUser = userService.registerUser(user);
       UserDTO responseuserDTO = UserDTO.builder()
               .userId(responseUser.getUserId())
               .userName(responseUser.getUserName())
               .userNickname(responseUser.getUserNickname())
+              .userNumber(responseUser.getUserNumber())
               .build();
       return ResponseEntity.ok().body(responseuserDTO);
     } catch (Exception e){

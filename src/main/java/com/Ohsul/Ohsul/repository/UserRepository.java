@@ -7,10 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.*;
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
-  boolean existsByUserId(String userId);
-  boolean existsByUserNickname(String userNickname);
-  UserEntity findByUserId(String userId);
+  Boolean existsByUserId(String userId);
+  Boolean existsByUserNickname(String userNickname);
+  Optional<UserEntity> findByUserId(String userId);
 
   Optional<UserEntity> findByUserNumber(Integer userNumber);
-
 }
