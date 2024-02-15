@@ -57,7 +57,7 @@ public class UserService {
 
   // 닉네임 중복체크
   public boolean checkNicknameDuplicate(String userNickname){
-    return userRepository.existsByNickname(userNickname);
+    return userRepository.existsByUserNickname(userNickname);
   }
 
 
