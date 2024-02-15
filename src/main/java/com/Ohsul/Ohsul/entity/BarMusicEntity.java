@@ -25,4 +25,8 @@ public class BarMusicEntity {
     @JoinColumn(name = "barId")
     private BarEntity bar;
 
+    @ManyToOne
+    @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
+    private ReviewEntity review;
+
 }
