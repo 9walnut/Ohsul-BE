@@ -36,9 +36,15 @@ public class SecurityConfig  {
     http
             .cors(Customizer.withDefaults())
             .csrf(CsrfConfigurer::disable)
+            .logout(auth -> auth
+                    .logoutUrl("/logout")
+                    .logoutSuccessHandler(((request, response, authentication) -> {
+                      response.setStatus(200);
+                    }))
+            )
             .authorizeHttpRequests(authroize -> authroize
                     .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                    .requestMatchers("/osul/**", "/register/**", "/login/**").permitAll() // 예외
+                    .requestMatchers("/ohsul/**", "/register/**", "/login/**","/main/**").permitAll() // 예외
                     .anyRequest().authenticated() // 어떤 요청이라도 인증 필요
             );
     http.addFilterAfter(customAuthFilter, UsernamePasswordAuthenticationFilter.class);
