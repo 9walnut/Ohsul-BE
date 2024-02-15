@@ -21,18 +21,21 @@ public class UserService {
   @Autowired
   BCryptPasswordEncoder passwordEncoder;
 
+  @Autowired
+  public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
 //  public  Optional<UserEntity> findOne(String userId){
 //    return userRepository.findByUserId(userId);
 //  }
 
   // 로그인
   public UserEntity login(String userId, String userPw){
-    UserEntity searchUser = userRepository.findByUserId(userId);
+    Optional<UserEntity> searchUserOpt = userRepository.findByUserId(userId);
 
-    // 일치하는 user 없을 시 null
-    if (searchUser != null && passwordEncoder.matches(userPw, searchUser.getUserPw())) {
-
-      return searchUser;
+    if (searchUserOpt.isPresent() && passwordEncoder.matches(userPw, searchUserOpt.get().getUserPw())) {
+      return searchUserOpt.get();
     }
     return null;
   }
@@ -42,9 +45,9 @@ public class UserService {
       throw new RuntimeException("entity null");
     }
     // 중복 아이디 불가
-    String id = userEntity.getUserId();
+    String userId = userEntity.getUserId();
 
-    if(userRepository.existsByUserId(userEntity.getUserId())){
+    if(userRepository.existsByUserId((userId))) {
       throw new RuntimeException("이미 존재하는 아이디입니다");
     }
     return userRepository.save(userEntity);
@@ -59,6 +62,4 @@ public class UserService {
   public boolean checkNicknameDuplicate(String userNickname){
     return userRepository.existsByUserNickname(userNickname);
   }
-
-
 }

@@ -21,7 +21,9 @@ public class CustomAuthFilter extends OncePerRequestFilter {
     try {
       HttpSession sesseion = request.getSession();
       log.warn("session id {}", sesseion.getId());
+
       Object userId = sesseion.getAttribute("userId");
+      log.warn("userNumber {}", userId);
       if(userId != null){
         // 1. 사용자 정보를 담느느 공간? 토큰 생성
         Authentication authentication = new UsernamePasswordAuthenticationToken(String.valueOf(userId), null, AuthorityUtils.NO_AUTHORITIES);

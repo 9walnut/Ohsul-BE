@@ -20,12 +20,12 @@ public class MyPageService {
 
   // 마이페이지 메인
   // 즐겨찾기 버튼 혼용 중
-  public UserFavoriteDTO getUserProfile(Integer userNumber) {
-    UserEntity userEntity = userRepository.findByUserNumber(userNumber)
-            .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userNumber));
+  public UserFavoriteDTO getUserProfile(String userId) {
+    UserEntity userEntity = userRepository.findByUserId(userId)
+            .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userId));
 
     if (userEntity == null) {
-      throw new UsernameNotFoundException("유저가 없습니다 : " + userNumber);
+      throw new UsernameNotFoundException("유저가 없습니다 : " + userId);
     }
 
     UserFavoriteDTO userProfile = new UserFavoriteDTO();
@@ -54,9 +54,9 @@ public class MyPageService {
     return userProfileInfo;
   }
 
-  public void deleteUser(Integer userNumber) {
-    UserEntity userEntity = userRepository.findByUserNumber(userNumber)
-            .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userNumber));
+  public void deleteUser(String userId) {
+    UserEntity userEntity = userRepository.findByUserId(userId)
+            .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userId));
     userRepository.delete(userEntity);
   }
 

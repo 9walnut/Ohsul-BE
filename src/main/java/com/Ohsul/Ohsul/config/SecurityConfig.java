@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.*;
+import org.springframework.security.config.http.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.*;
@@ -36,13 +37,15 @@ public class SecurityConfig  {
     http
             .cors(Customizer.withDefaults())
             .csrf(CsrfConfigurer::disable)
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
             .logout(auth -> auth
                     .logoutUrl("/logout")
                     .logoutSuccessHandler(((request, response, authentication) -> {
                       response.setStatus(200);
+//                      response.sendRedirect("/main");
                     }))
             )
-            .authorizeHttpRequests(authroize -> authroize
+            .authorizeHttpRequests(authorize -> authorize
                     .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                     .requestMatchers("/ohsul/**", "/register/**", "/login/**","/main/**").permitAll() // 예외
                     .anyRequest().authenticated() // 어떤 요청이라도 인증 필요
