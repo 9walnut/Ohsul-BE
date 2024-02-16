@@ -11,6 +11,5 @@ public class UserReviewDTO {
   private String userId;
   private String userName;
   private String userNickname;
-  private List<ReviewEntity> reviews;
-
+  private List<ReviewDTO> reviews;
 }
