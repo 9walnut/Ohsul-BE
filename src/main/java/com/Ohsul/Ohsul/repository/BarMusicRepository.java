@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface BarMusicRepository extends JpaRepository<BarMusicEntity, BarMusicKey> {
-    List<BarMusicEntity> findByReviewId(Integer reviewId);
+//    List<BarMusicEntity> findByReview_reviewId(Integer reviewId);
 
-    void deleteByReviewId(Integer reviewId);
+    void deleteByReview_reviewId(Integer reviewId);
 
 }

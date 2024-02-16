@@ -34,7 +34,7 @@ public class ReviewService {
 
     // 특정 바 전체 리뷰 조회
     public List<BarReviewDTO> getBarReviewAll(Integer barId) {
-        List<ReviewEntity> searchResult = reviewRepository.findAllById(barId);
+        List<ReviewEntity> searchResult = reviewRepository.findAllByBar_BarId(barId);
         List<BarReviewDTO> reviews = new ArrayList<>();
 
         for (ReviewEntity i : searchResult) {
@@ -129,9 +129,9 @@ public class ReviewService {
         review = reviewRepository.save(review);
 
         // 기존 태그 삭제
-        barAlcoholRepository.deleteByReviewId(reviewId);
-        barMusicRepository.deleteByReviewId(reviewId);
-        barMoodRepository.deleteByReviewId(reviewId);
+        barAlcoholRepository.deleteByReview_reviewId(reviewId);
+        barMusicRepository.deleteByReview_reviewId(reviewId);
+        barMoodRepository.deleteByReview_reviewId(reviewId);
 
         // 새 태그 생성
         List<Integer> alcoholTags = barReviewDTO.getAlcoholTags();
