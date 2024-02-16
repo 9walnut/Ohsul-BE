@@ -17,13 +17,14 @@ public class BarMusicEntity {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "musicId")
-    private MusicEntity music;
+    @JoinColumn(name = "barId")
+    private BarEntity bar;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "barId")
-    private BarEntity bar;
+    @JoinColumn(name = "musicId")
+    private MusicEntity music;
+
 
     @ManyToOne
     @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
