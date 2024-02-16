@@ -24,13 +24,13 @@ public class MyPageController {
 
   // 마이페이지 내 정보 조회
   @GetMapping("/info")
-  public ResponseEntity<?> getUserProfileInfo(@RequestParam Integer userNumber){
-    UserFavoriteDTO userProfileInfo = myPageService.getUserProfileInfo(userNumber);
+  public ResponseEntity<?> getUserProfileInfo(@AuthenticationPrincipal String userId){
+    MyPageDTO userProfileInfo = myPageService.getUserProfileInfo(userId);
     return new ResponseEntity<>(userProfileInfo, HttpStatus.OK);
   }
 
   // 회원 탈퇴
-  @DeleteMapping("/")
+  @DeleteMapping("")
   public ResponseEntity<String> deleteUser(@AuthenticationPrincipal String userId) {
     myPageService.deleteUser(userId);
     return new ResponseEntity<>("회원 탈퇴 완료", HttpStatus.OK);
@@ -38,8 +38,8 @@ public class MyPageController {
 
   // 내 정보 수정
   @PatchMapping("/info")
-  public void updateUserProfile(@RequestBody UserFavoriteDTO userFavoriteDTO){
-    myPageService.updateUserProfile(userFavoriteDTO);
+  public void updateUserProfile(@AuthenticationPrincipal String userId, @RequestBody MyPageDTO myPageDTO){
+    myPageService.updateUserProfile(userId, myPageDTO);
   }
 
   // 즐겨찾기 버튼
@@ -51,8 +51,8 @@ public class MyPageController {
 
   // 작성한 리뷰
   @GetMapping("/myReview")
-  public ResponseEntity<?> getMyReview(@RequestParam Integer userNumber){
-    UserReviewDTO userReview = myPageService.getUserReview(userNumber);
+  public ResponseEntity<?> getMyReview(@AuthenticationPrincipal String userId){
+    UserReviewDTO userReview = myPageService.getUserReview(userId);
     return new ResponseEntity<>(userReview, HttpStatus.OK);
   }
 
