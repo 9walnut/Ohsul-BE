@@ -9,6 +9,8 @@ import java.util.List;
 public interface BarMusicRepository extends JpaRepository<BarMusicEntity, BarMusicKey> {
 //    List<BarMusicEntity> findByReview_reviewId(Integer reviewId);
 
+    List<BarMusicEntity> findAllByReview_reviewId(Integer reviewId);
+
     void deleteByReview_reviewId(Integer reviewId);
 
 }

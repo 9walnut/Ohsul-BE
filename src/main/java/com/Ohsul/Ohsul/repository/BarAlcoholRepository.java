@@ -9,5 +9,6 @@ import java.util.List;
 public interface BarAlcoholRepository extends JpaRepository<BarAlcoholEntity, BarAlcoholKey> {
 //    List<BarAlcoholEntity> findByReview_reviewId(Integer reviewId);
 
+    List<BarAlcoholEntity> findAllByReview_reviewId(Integer reviewId);
     void deleteByReview_reviewId(Integer reviewId);
 }

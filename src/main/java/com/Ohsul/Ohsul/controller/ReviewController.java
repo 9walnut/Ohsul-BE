@@ -8,7 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/ohsul")
+@RequestMapping("/api/ohsul")
 public class ReviewController {
 
     @Autowired
@@ -26,9 +26,9 @@ public class ReviewController {
 
     // 리뷰 등록
     @PostMapping("/{barId}/review")
-    public ResponseEntity<?> createReview(@PathVariable Integer barId, @RequestBody BarReviewDTO barReviewDTO, @AuthenticationPrincipal Integer userNumber) {
+    public ResponseEntity<?> createReview(@PathVariable Integer barId, @RequestBody BarReviewDTO barReviewDTO, @AuthenticationPrincipal String userId) {
         try {
-            Boolean result = reviewService.createReview(barId, barReviewDTO, userNumber);
+            Boolean result = reviewService.createReview(barId, barReviewDTO, userId);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -48,9 +48,9 @@ public class ReviewController {
 
     // 리뷰 수정
     @PatchMapping("/{barId}/review/{reviewId}")
-    public ResponseEntity<?> editReview(@PathVariable Integer barId, @PathVariable Integer reviewId, @RequestBody BarReviewDTO barReviewDTO, @AuthenticationPrincipal Integer userNumber) {
+    public ResponseEntity<?> editReview(@PathVariable Integer barId, @PathVariable Integer reviewId, @RequestBody BarReviewDTO barReviewDTO, @AuthenticationPrincipal String userId) {
         try {
-            Boolean result = reviewService.editReview(barId, reviewId, barReviewDTO, userNumber);
+            Boolean result = reviewService.editReview(barId, reviewId, barReviewDTO, userId);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
