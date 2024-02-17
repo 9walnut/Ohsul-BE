@@ -39,7 +39,7 @@ public class SecurityConfig  {
             .csrf(CsrfConfigurer::disable)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
             .logout(auth -> auth
-                    .logoutUrl("/logout")
+                    .logoutUrl("/api/logout")
                     .logoutSuccessHandler(((request, response, authentication) -> {
                       response.setStatus(200);
 //                      response.sendRedirect("/main");
@@ -47,18 +47,10 @@ public class SecurityConfig  {
             )
             .authorizeHttpRequests(authorize -> authorize
                     .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                    .requestMatchers("/ohsul/**", "/register/**", "/login/**","/main/**").permitAll() // 예외
+                    .requestMatchers("/api/ohsul/**", "/api/register/**", "/api/login/**","/api/main/**").permitAll() // 예외
                     .anyRequest().authenticated() // 어떤 요청이라도 인증 필요
             );
     http.addFilterAfter(customAuthFilter, UsernamePasswordAuthenticationFilter.class);
-            // form 방식 로그인 사용
-//            .formLogin(login -> login
-//                    .loginPage("/login")
-//                    .usernameParameter("userId")
-//                    .passwordParameter("userPw")
-//                    .defaultSuccessUrl("/main", true)
-//                    .permitAll())
-//            .logout(Customizer.withDefaults());
     return http.build();
   }
   @Bean
