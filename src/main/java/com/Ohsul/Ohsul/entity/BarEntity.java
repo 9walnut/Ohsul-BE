@@ -24,7 +24,7 @@ public class BarEntity {
   @Column(name = "description", nullable = false)
   private String description;
 
-  @Column(name = "telephone", nullable = false, length = 11)
+  @Column(name = "telephone", nullable = false, length = 20)
   private String telephone;
 
   @Column(name = "barImg")

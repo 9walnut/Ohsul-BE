@@ -35,11 +35,11 @@ public class ReviewController {
         }
     }
 
-    // 리뷰 수정 시 비회원 닉네임, 비번 일치 여부 확인
-    @PostMapping("/{barId}/review/{reviewId}/editCheck")
-    public ResponseEntity<?> editUserCheck(@PathVariable Integer barId, @PathVariable Integer reviewId, @RequestBody BarReviewDTO barReviewDTO) {
+    // (비회원) 리뷰 수정/삭제 (비번 일치 여부 확인)
+    @PostMapping("/{barId}/review/{reviewId}/userCheck")
+    public ResponseEntity<?> userCheck(@PathVariable Integer barId, @PathVariable Integer reviewId, @RequestBody BarReviewDTO barReviewDTO) {
         try {
-            Boolean result = reviewService.editUserCheck(reviewId, barReviewDTO);
+            Boolean result = reviewService.userCheck(reviewId, barReviewDTO);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
