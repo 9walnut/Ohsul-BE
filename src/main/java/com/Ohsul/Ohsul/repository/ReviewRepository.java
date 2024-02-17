@@ -1,5 +1,6 @@
 package com.Ohsul.Ohsul.repository;
 
+import com.Ohsul.Ohsul.domain.Review;
 import com.Ohsul.Ohsul.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 

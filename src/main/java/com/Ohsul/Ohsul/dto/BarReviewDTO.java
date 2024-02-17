@@ -1,12 +1,16 @@
 package com.Ohsul.Ohsul.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BarReviewDTO {
     private String content;
     private Integer score;
