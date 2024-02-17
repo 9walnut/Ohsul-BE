@@ -1,20 +1,26 @@
 package com.Ohsul.Ohsul.controller;
 
+import com.Ohsul.Ohsul.dto.*;
 import com.Ohsul.Ohsul.service.*;
 import lombok.*;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ohsul")
+@RequestMapping("/api/ohsul/near")
 public class NearAlcoholController {
-  private NearAlcoholService nearAlcoholService;
+  private final NearAlcoholService nearAlcoholService;
 
-  @GetMapping("/{curAddress}")
-  public String getNearPlace(@RequestParam String lat, @RequestParam String lng) throws IOException{
-    return nearAlcoholService.getNearPlace(lat, lng);
+//  public NearAlcoholController(NearAlcoholService nearAlcoholService) {
+//    this.nearAlcoholService = nearAlcoholService;
+//  }
+  @PostMapping("")
+  public ResponseEntity<List<BarListDTO>> getNearBar(@RequestBody List<String> telephone){
+    List<BarListDTO> bars = nearAlcoholService.findBarsByTelephone(telephone);
+    return ResponseEntity.ok(bars);
   }
-
 }
