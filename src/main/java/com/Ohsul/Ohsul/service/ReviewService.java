@@ -3,6 +3,7 @@ package com.Ohsul.Ohsul.service;
 import com.Ohsul.Ohsul.dto.BarReviewDTO;
 import com.Ohsul.Ohsul.entity.*;
 import com.Ohsul.Ohsul.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -48,6 +49,7 @@ public class ReviewService {
     }
 
     // 리뷰 등록
+    @Transactional
     public Boolean createReview(Integer barId, BarReviewDTO barReviewDTO, Integer userNumber) {
         BarEntity bar = barRepository.findById(barId)
                 .orElseThrow(()-> new RuntimeException("가게 정보 없음"));
@@ -105,15 +107,16 @@ public class ReviewService {
         return true;
     }
 
-    // 리뷰 수정 (비회원) 인증
-    public Boolean editUserCheck(Integer reviewId, BarReviewDTO barReviewDTO) {
+    // 리뷰 수정 (비회원) 인증 (비번 일치 여부 확인)
+    public Boolean userCheck(Integer reviewId, BarReviewDTO barReviewDTO) {
         ReviewEntity review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("리뷰 정보 없음"));
 
-        return Objects.equals(review.getNickname(), barReviewDTO.getNickname()) && Objects.equals(review.getReviewPw(), barReviewDTO.getReviewPw());
+        return Objects.equals(review.getReviewPw(), barReviewDTO.getReviewPw());
     }
 
-    // 리뷰 수정 (트랜잭션 적용 예정)
+    // 리뷰 수정
+    @Transactional
     public Boolean editReview(Integer barId, Integer reviewId, BarReviewDTO barReviewDTO, Integer userNumber) {
         BarEntity bar = barRepository.findById(barId)
                 .orElseThrow(() -> new RuntimeException("가게 정보 없음"));
