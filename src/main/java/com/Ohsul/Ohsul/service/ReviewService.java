@@ -3,6 +3,8 @@ package com.Ohsul.Ohsul.service;
 import com.Ohsul.Ohsul.dto.BarReviewDTO;
 import com.Ohsul.Ohsul.entity.*;
 import com.Ohsul.Ohsul.repository.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,6 +38,9 @@ public class ReviewService {
     BarMusicRepository barMusicRepository;
     @Autowired
     BarMoodRepository barMoodRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     // 특정 바 전체 리뷰 조회
     public List<BarReviewDTO> getBarReviewAll(Integer barId) {
@@ -65,13 +71,13 @@ public class ReviewService {
         BarEntity bar = barRepository.findById(barId)
                 .orElseThrow(()-> new RuntimeException("가게 정보 없음"));
 
-        log.error("userId 값 {}", userId);
+        Optional<UserEntity> userSearch = userRepository.findByUserId(userId);
 
         ReviewEntity review;
         // 회원 리뷰 저장
-        if (userId != null) {
-            UserEntity user = userRepository.findByUserId(userId)
-                    .orElseThrow(() -> new RuntimeException("유저 정보 없음"));
+        if (userSearch.isPresent()) {
+            UserEntity user = userSearch.get();
+            log.error("user 값 {}", user);
 
             review = ReviewEntity.builder()
                     .content(barReviewDTO.getContent())
@@ -89,6 +95,7 @@ public class ReviewService {
                     .reviewImg(barReviewDTO.getReviewImg())
                     .nickname(barReviewDTO.getNickname())
                     .reviewPw(barReviewDTO.getReviewPw())
+                    .reviewImg(barReviewDTO.getReviewImg())
                     .bar(bar)
                     .build();
         }
@@ -125,7 +132,6 @@ public class ReviewService {
     public Boolean userCheck(Integer reviewId, BarReviewDTO barReviewDTO) {
         ReviewEntity review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("리뷰 정보 없음"));
-
         return Objects.equals(review.getReviewPw(), barReviewDTO.getReviewPw());
     }
 
@@ -179,10 +185,23 @@ public class ReviewService {
     }
 
     // 리뷰 삭제
+    @Transactional
     public Boolean deleteReview(Integer reviewId) {
         ReviewEntity review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("리뷰 정보 없음"));
+
+        List<BarAlcoholEntity> barAlcoholEntityList = barAlcoholRepository.findAllByReview_reviewId(reviewId);
+        List<BarMusicEntity>  barMusicEntityList = barMusicRepository.findAllByReview_reviewId(reviewId);
+        List<BarMoodEntity> barMoodEntityList = barMoodRepository.findAllByReview_reviewId(reviewId);
+
+        barAlcoholRepository.deleteAll(barAlcoholEntityList);
+        barMusicRepository.deleteAll(barMusicEntityList);
+        barMoodRepository.deleteAll(barMoodEntityList);
+
         reviewRepository.deleteById(reviewId);
+
+        entityManager.flush();
+
         return true;
     }
 

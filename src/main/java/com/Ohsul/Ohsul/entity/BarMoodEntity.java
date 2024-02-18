@@ -25,7 +25,7 @@ public class BarMoodEntity {
     @JoinColumn(name = "moodId")
     private MoodEntity mood;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
     private ReviewEntity review;
 }
