@@ -4,9 +4,9 @@ spring:
       on-profile: dev
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://{MARIADB_HOST}/ohsul
-    username: {MARIADB_USERNAME}
-    password: {MARIADB_PASSWORD}
+    url: jdbc:mariadb://${MARIADB_HOST}/ohsul
+    username: ${MARIADB_USERNAME}
+    password: ${MARIADB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: create
