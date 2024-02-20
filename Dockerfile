@@ -8,6 +8,7 @@ ARG JAR_FILE=build/libs/*.jar
 # jar 파일 복제
 COPY ${JAR_FILE} app.jar
 COPY src/main/resources/application-dev.yml application-dev.yml
+COPY src/main/resources/keystore.p12 keystore.p12
 
 # 실행 명령어
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=dev", "app.jar"]
