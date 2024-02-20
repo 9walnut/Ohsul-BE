@@ -45,7 +45,9 @@ dependencies {
 
 	implementation 'org.slf4j:slf4j-api' // slf4j 관련 패키지 의존성
 
-	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.1.RELEASE'
+//	implementation 'software.amazon.awssdk:s3:2.24.5'
+	implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.1.0")
+	implementation 'io.awspring.cloud:spring-cloud-aws-starter-s3'
 }
 
 tasks.named('test') {
