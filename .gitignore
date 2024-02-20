@@ -34,6 +34,7 @@ out/
 /.nb-gradle/
 
 keystore.p12
+ohsul.p12
 ### VS Code ###
 .vscode/
 application.properties
