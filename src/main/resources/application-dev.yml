@@ -31,8 +31,7 @@ spring:
         secretKey: ${SECRETKEY}
 server:
   ssl:
-
-    key-store: file:/etc/letsencrypt/live/ohsul/keystore.p12
+    key-store: classpath:keystore.p12
     key-store-type: PKCS12
     key-store-password: {PKCSPW}
     keyAlias: ohsulbecert
