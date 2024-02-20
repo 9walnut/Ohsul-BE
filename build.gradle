@@ -44,6 +44,8 @@ dependencies {
 	implementation group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '3.3.2'
 
 	implementation 'org.slf4j:slf4j-api' // slf4j 관련 패키지 의존성
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.1.RELEASE'
 }
 
 tasks.named('test') {

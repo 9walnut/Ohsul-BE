@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,8 @@ public class ReviewService {
     BarMusicRepository barMusicRepository;
     @Autowired
     BarMoodRepository barMoodRepository;
+    @Autowired
+    S3Service s3Service;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -72,8 +75,8 @@ public class ReviewService {
                 .orElseThrow(()-> new RuntimeException("가게 정보 없음"));
 
         Optional<UserEntity> userSearch = userRepository.findByUserId(userId);
-
         ReviewEntity review;
+
         // 회원 리뷰 저장
         if (userSearch.isPresent()) {
             UserEntity user = userSearch.get();
@@ -95,7 +98,6 @@ public class ReviewService {
                     .reviewImg(barReviewDTO.getReviewImg())
                     .nickname(barReviewDTO.getNickname())
                     .reviewPw(barReviewDTO.getReviewPw())
-                    .reviewImg(barReviewDTO.getReviewImg())
                     .bar(bar)
                     .build();
         }
@@ -126,6 +128,12 @@ public class ReviewService {
             barMoodRepository.save(barMood);
         }
         return true;
+    }
+
+    // 리뷰 등록(사진)
+    public String createReviewImg(MultipartFile reviewImg) {
+        // 리뷰 이미지 저장
+        return String.valueOf(s3Service.uploadReviewImg(reviewImg));
     }
 
     // 리뷰 수정 (비회원) 인증 (비번 일치 여부 확인)

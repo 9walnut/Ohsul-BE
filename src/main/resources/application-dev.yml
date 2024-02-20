@@ -13,3 +13,19 @@ spring:
     properties:
       format_sql: true
       show-sql: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  cloud:
+    aws:
+      s3:
+        bucket: ohsul
+      region:
+        static: ap-northeast-2
+        auto: false
+      stack:
+        auto: false
+      credentials:
+        accessKey: ${ACCESSKEY}
+        secretKey: ${SECRETKEY}
