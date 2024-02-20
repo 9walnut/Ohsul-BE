@@ -39,6 +39,7 @@ public class ReviewService {
     BarMusicRepository barMusicRepository;
     @Autowired
     BarMoodRepository barMoodRepository;
+
     @Autowired
     S3Service s3Service;
 
@@ -132,8 +133,8 @@ public class ReviewService {
 
     // 리뷰 등록(사진)
     public String createReviewImg(MultipartFile reviewImg) {
-        // 리뷰 이미지 저장
-        return String.valueOf(s3Service.uploadReviewImg(reviewImg));
+        // s3에 리뷰 이미지 저장
+        return s3Service.uploadReviewImg(reviewImg);
     }
 
     // 리뷰 수정 (비회원) 인증 (비번 일치 여부 확인)
@@ -206,6 +207,7 @@ public class ReviewService {
         barMusicRepository.deleteAll(barMusicEntityList);
         barMoodRepository.deleteAll(barMoodEntityList);
 
+//        s3Service.deleteReviewImg(review.getReviewImg());
         reviewRepository.deleteById(reviewId);
 
         entityManager.flush();

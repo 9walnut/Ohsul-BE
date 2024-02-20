@@ -70,6 +70,7 @@ jobs:
       - name: docker run new container
         run: sudo docker run --name Ohsul-be --network ohsul-net -v /etc/letsencrypt:/etc/letsencrypt -d -p 8080:8080 -e MARIADB_USERNAME=${{ secrets.MARIADB_USERNAME }} -e MARIADB_HOST=${{ secrets.MARIADB_HOST }} -e MARIADB_PASSWORD=${{ secrets.MARIADB_PASSWORD }} -e PKCSPW=${{ secrets.PKCSPW }} ${{ secrets.DOCKERHUB_USERNAME }}/ohsul-be
 
+
       # 5. 미사용 이미지를 정리합니다
       - name: delete old docker image
         run: sudo docker system prune -f

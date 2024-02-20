@@ -34,11 +34,10 @@ out/
 /.nb-gradle/
 
 keystore.p12
+ohsul.p12
 ### VS Code ###
 .vscode/
 application.properties
 application-local.yml
 
 application-s3.yml
-
-keystore.p12
