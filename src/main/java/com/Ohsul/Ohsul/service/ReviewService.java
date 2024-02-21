@@ -3,11 +3,14 @@ package com.Ohsul.Ohsul.service;
 import com.Ohsul.Ohsul.dto.BarReviewDTO;
 import com.Ohsul.Ohsul.entity.*;
 import com.Ohsul.Ohsul.repository.*;
+import io.awspring.cloud.s3.S3Template;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,6 +43,12 @@ public class ReviewService {
     @Autowired
     BarMoodRepository barMoodRepository;
 
+    @Value("${spring.cloud.aws.s3.bucket}")
+    private String bucket;
+
+    @Autowired
+    private S3Template s3Template;
+
     @Autowired
     S3Service s3Service;
 
@@ -57,6 +66,7 @@ public class ReviewService {
             List<BarMoodEntity> barMoodEntityList = barMoodRepository.findAllByReview_reviewId(i.getReviewId());
 
             BarReviewDTO barReviewDTO = BarReviewDTO.builder()
+                    .reviewId(i.getReviewId())
                     .content(i.getContent())
                     .score(i.getScore())
                     .reviewImg(i.getReviewImg())
@@ -71,12 +81,14 @@ public class ReviewService {
 
     // 리뷰 등록
     @Transactional
-    public Boolean createReview(Integer barId, BarReviewDTO barReviewDTO, String userId) {
+    public Boolean createReview(Integer barId, MultipartFile reviewImg, BarReviewDTO barReviewDTO, String userId) {
         BarEntity bar = barRepository.findById(barId)
                 .orElseThrow(()-> new RuntimeException("가게 정보 없음"));
 
         Optional<UserEntity> userSearch = userRepository.findByUserId(userId);
         ReviewEntity review;
+
+        String reviewImgUrl = s3Service.uploadReviewImg(reviewImg);
 
         // 회원 리뷰 저장
         if (userSearch.isPresent()) {
@@ -86,7 +98,7 @@ public class ReviewService {
             review = ReviewEntity.builder()
                     .content(barReviewDTO.getContent())
                     .score(barReviewDTO.getScore())
-                    .reviewImg(barReviewDTO.getReviewImg())
+                    .reviewImg(reviewImgUrl)
                     .nickname(barReviewDTO.getNickname())
                     .user(user)
                     .bar(bar)
@@ -96,7 +108,7 @@ public class ReviewService {
             review = ReviewEntity.builder()
                     .content(barReviewDTO.getContent())
                     .score(barReviewDTO.getScore())
-                    .reviewImg(barReviewDTO.getReviewImg())
+                    .reviewImg(reviewImgUrl)
                     .nickname(barReviewDTO.getNickname())
                     .reviewPw(barReviewDTO.getReviewPw())
                     .bar(bar)
@@ -132,10 +144,10 @@ public class ReviewService {
     }
 
     // 리뷰 등록(사진)
-    public String createReviewImg(MultipartFile reviewImg) {
-        // s3에 리뷰 이미지 저장
-        return s3Service.uploadReviewImg(reviewImg);
-    }
+//    public String createReviewImg(MultipartFile reviewImg) {
+//        // s3에 리뷰 이미지 저장
+//        return s3Service.uploadReviewImg(reviewImg);
+//    }
 
     // 리뷰 수정 (비회원) 인증 (비번 일치 여부 확인)
     public Boolean userCheck(Integer reviewId, BarReviewDTO barReviewDTO) {
@@ -146,24 +158,25 @@ public class ReviewService {
 
     // 리뷰 수정
     @Transactional
-    public Boolean editReview(Integer barId, Integer reviewId, BarReviewDTO barReviewDTO, String userId) {
+    public Boolean editReview(Integer barId, Integer reviewId, MultipartFile reviewImg, BarReviewDTO barReviewDTO, String userId) {
         BarEntity bar = barRepository.findById(barId)
                 .orElseThrow(() -> new RuntimeException("가게 정보 없음"));
 
         ReviewEntity review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("리뷰 정보 없음"));
 
+        // 기존 리뷰 이미지 s3 삭제
+        s3Service.deleteReviewImg(review.getReviewImg());
+        
+        // 수정 리뷰 이미지 s3 등록
+        String newReviewImgUrl = s3Service.uploadReviewImg(reviewImg);
+
         // 업데이트를 위한 setter 사용
         review.setContent(barReviewDTO.getContent());
         review.setScore(barReviewDTO.getScore());
-        review.setReviewImg(barReviewDTO.getReviewImg());
+        review.setReviewImg(newReviewImgUrl);
 
         review = reviewRepository.save(review);
-
-        // 기존 태그 삭제
-        barAlcoholRepository.deleteByReview_reviewId(reviewId);
-        barMusicRepository.deleteByReview_reviewId(reviewId);
-        barMoodRepository.deleteByReview_reviewId(reviewId);
 
         // 새 태그 생성
         List<Integer> alcoholTags = barReviewDTO.getAlcoholTags();
@@ -190,7 +203,14 @@ public class ReviewService {
             BarMoodEntity barMood = new BarMoodEntity(bar, mood, review);
             barMoodRepository.save(barMood);
         }
+        deleteAssociateTags(reviewId);
         return true;
+    }
+
+    public void deleteAssociateTags(Integer reviewId) {
+        barAlcoholRepository.deleteByReview_reviewId(reviewId);
+        barMusicRepository.deleteByReview_reviewId(reviewId);
+        barMoodRepository.deleteByReview_reviewId(reviewId);
     }
 
     // 리뷰 삭제
@@ -207,7 +227,7 @@ public class ReviewService {
         barMusicRepository.deleteAll(barMusicEntityList);
         barMoodRepository.deleteAll(barMoodEntityList);
 
-//        s3Service.deleteReviewImg(review.getReviewImg());
+        s3Service.deleteReviewImg(review.getReviewImg());
         reviewRepository.deleteById(reviewId);
 
         entityManager.flush();
@@ -229,9 +249,12 @@ public class ReviewService {
                 .score(barReview.getScore())
                 .reviewImg(barReview.getReviewImg())
                 .nickname(barReview.getNickname())
-                .alcoholTags(barAlcoholEntityList.stream().map(BarAlcoholEntity::getAlcohol).map(AlcoholEntity::getAlcoholId).collect(Collectors.toList()))
-                .musicTags(barMusicEntityList.stream().map(BarMusicEntity::getMusic).map(MusicEntity::getMusicId).collect(Collectors.toList()))
-                .moodTags(barMoodEntityList.stream().map(BarMoodEntity::getMood).map(MoodEntity::getMoodId).collect(Collectors.toList()))
+                .alcoholTags(barAlcoholEntityList.stream().map(BarAlcoholEntity::getAlcohol)
+                        .map(AlcoholEntity::getAlcoholId).collect(Collectors.toList()))
+                .musicTags(barMusicEntityList.stream().map(BarMusicEntity::getMusic)
+                        .map(MusicEntity::getMusicId).collect(Collectors.toList()))
+                .moodTags(barMoodEntityList.stream().map(BarMoodEntity::getMood)
+                        .map(MoodEntity::getMoodId).collect(Collectors.toList()))
                 .build();
     }
 }
