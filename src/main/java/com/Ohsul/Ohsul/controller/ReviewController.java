@@ -28,12 +28,13 @@ public class ReviewController {
         }
     }
 
-    // 리뷰 등록
+    // 리뷰 등록 (이미지 데이터까지 한 번에)
     @PostMapping("/{barId}/review")
-    public ResponseEntity<?> createReview(@PathVariable Integer barId, @RequestBody BarReviewDTO barReviewDTO,
+    public ResponseEntity<?> createReview(@PathVariable Integer barId, @RequestPart MultipartFile reviewImg,
+                                          @RequestPart BarReviewDTO barReviewDTO,
                                           @AuthenticationPrincipal String userId) {
         try {
-            Boolean result = reviewService.createReview(barId, barReviewDTO, userId);
+            Boolean result = reviewService.createReview(barId, reviewImg, barReviewDTO, userId);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -41,10 +42,10 @@ public class ReviewController {
     }
 
     // 리뷰 등록(사진)
-    @PostMapping(value = "/{barId}/review/reviewImg", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String createReviewImg(@RequestParam("reviewImg") MultipartFile reviewImg) {
-            return reviewService.createReviewImg(reviewImg);
-    }
+//    @PostMapping(value = "/{barId}/review/reviewImg", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public String createReviewImg(@RequestParam("reviewImg") MultipartFile reviewImg) {
+//            return reviewService.createReviewImg(reviewImg);
+//    }
 
     // 리뷰 > '수정' 클릭 시 (원래 리뷰 내용 반환)
     @PostMapping("/{barId}/review/{reviewId}")
@@ -56,12 +57,14 @@ public class ReviewController {
         }
     }
 
-    // 리뷰 > 수정하기 (내용)
+    // 리뷰 > 수정하기 (이미지 데이터까지 한 번에)
     @PatchMapping("/{barId}/review/{reviewId}")
-    public ResponseEntity<?> editReview(@PathVariable Integer barId, @PathVariable Integer reviewId, @RequestBody BarReviewDTO barReviewDTO,
+    public ResponseEntity<?> editReview(@PathVariable Integer barId, @PathVariable Integer reviewId,
+                                        @RequestPart MultipartFile reviewImg,
+                                        @RequestPart BarReviewDTO barReviewDTO,
                                         @AuthenticationPrincipal String userId) {
         try {
-            Boolean result = reviewService.editReview(barId, reviewId, barReviewDTO, userId);
+            Boolean result = reviewService.editReview(barId, reviewId, reviewImg, barReviewDTO, userId);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
