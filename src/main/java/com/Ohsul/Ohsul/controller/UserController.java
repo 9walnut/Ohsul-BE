@@ -41,13 +41,13 @@ public class UserController {
               .build();
        session.setAttribute("userId", user.getUserId());
        session.setMaxInactiveInterval(3600);
-       Cookie customCookie = new Cookie("userLoggedIn", user.getUserId());
-       customCookie.setHttpOnly(true);
-       customCookie.setPath("/");
-       customCookie.setSecure(true);
-
-       String cookieString = String.format("%s=%s; Path=%s; HttpOnly; SameSite=Lax", customCookie.getName(), customCookie.getValue(), customCookie.getPath());
-       response.addHeader("Set-Cookie", cookieString);
+//       Cookie customCookie = new Cookie("userLoggedIn", user.getUserId());
+//       customCookie.setHttpOnly(true);
+//       customCookie.setPath("/");
+//       customCookie.setSecure(true);
+//
+//       String cookieString = String.format("%s=%s; Path=%s; HttpOnly; SameSite=Lax", customCookie.getName(), customCookie.getValue(), customCookie.getPath());
+//       response.addHeader("Set-Cookie", cookieString);
 
       return ResponseEntity.ok().body(responseUserDTO);
     } catch (Exception e){

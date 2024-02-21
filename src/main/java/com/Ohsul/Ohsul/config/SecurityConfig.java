@@ -43,12 +43,12 @@ public class SecurityConfig  {
                     .logoutUrl("/api/logout")
                     .logoutSuccessHandler(((request, response, authentication) -> {
                       // 쿠키 삭제 로직
-                      Cookie cookie = new Cookie("userLoggedIn", null);
-                      cookie.setPath("/");
-                      cookie.setHttpOnly(true);
-                      cookie.setMaxAge(0);
-                      cookie.setSecure(true);
-                      response.addCookie(cookie);
+//                      Cookie cookie = new Cookie("userLoggedIn", null);
+//                      cookie.setPath("/");
+//                      cookie.setHttpOnly(true);
+//                      cookie.setMaxAge(0);
+//                      cookie.setSecure(true);
+//                      response.addCookie(cookie);
                       response.setStatus(200);
                     }))
             )
