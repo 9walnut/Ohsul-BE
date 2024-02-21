@@ -47,6 +47,7 @@ public class SecurityConfig  {
                       cookie.setPath("/");
                       cookie.setHttpOnly(true);
                       cookie.setMaxAge(0);
+                      cookie.setSecure(true);
                       response.addCookie(cookie);
                       response.setStatus(200);
                     }))
@@ -68,6 +69,7 @@ public class SecurityConfig  {
     config.setAllowedOriginPatterns(Arrays.asList("*"));
     config.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PUT", "PATCH"));
     config.setAllowedHeaders(Arrays.asList("*"));
+    config.setAllowedOriginPatterns(Arrays.asList("https://*"));
 
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
