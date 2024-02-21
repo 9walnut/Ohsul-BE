@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BarReviewDTO {
+    private Integer reviewId;
     private String content;
     private Integer score;
     private String reviewImg;

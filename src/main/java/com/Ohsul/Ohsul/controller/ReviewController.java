@@ -9,6 +9,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Objects;
+
 @RestController
 @RequestMapping("/api/ohsul")
 public class ReviewController {
@@ -44,22 +46,33 @@ public class ReviewController {
             return reviewService.createReviewImg(reviewImg);
     }
 
-    // (비회원) 리뷰 수정/삭제 (비번 일치 여부 확인)
-    @PostMapping("/{barId}/review/{reviewId}/userCheck")
-    public ResponseEntity<?> userCheck(@PathVariable Integer barId, @PathVariable Integer reviewId, @RequestBody BarReviewDTO barReviewDTO) {
+    // 리뷰 > '수정' 클릭 시 (원래 리뷰 내용 반환)
+    @PostMapping("/{barId}/review/{reviewId}")
+    public ResponseEntity<?> getOriginReview(@PathVariable Integer reviewId) {
         try {
-            Boolean result = reviewService.userCheck(reviewId, barReviewDTO);
+            return ResponseEntity.ok().body(reviewService.getBarReview(reviewId));
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // 리뷰 > 수정하기 (내용)
+    @PatchMapping("/{barId}/review/{reviewId}")
+    public ResponseEntity<?> editReview(@PathVariable Integer barId, @PathVariable Integer reviewId, @RequestBody BarReviewDTO barReviewDTO,
+                                        @AuthenticationPrincipal String userId) {
+        try {
+            Boolean result = reviewService.editReview(barId, reviewId, barReviewDTO, userId);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    // 리뷰 수정
-    @PatchMapping("/{barId}/review/{reviewId}")
-    public ResponseEntity<?> editReview(@PathVariable Integer barId, @PathVariable Integer reviewId, @RequestBody BarReviewDTO barReviewDTO, @AuthenticationPrincipal String userId) {
+    // (비회원) 리뷰 수정/삭제 (비번 일치 여부 확인)
+    @PostMapping("/{barId}/review/{reviewId}/userCheck")
+    public ResponseEntity<?> userCheck(@PathVariable Integer barId, @PathVariable Integer reviewId, @RequestBody BarReviewDTO barReviewDTO) {
         try {
-            Boolean result = reviewService.editReview(barId, reviewId, barReviewDTO, userId);
+            Boolean result = reviewService.userCheck(reviewId, barReviewDTO);
             return ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -86,5 +99,4 @@ public class ReviewController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 }

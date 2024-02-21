@@ -3,11 +3,13 @@ package com.Ohsul.Ohsul.service;
 import com.Ohsul.Ohsul.dto.BarReviewDTO;
 import com.Ohsul.Ohsul.entity.*;
 import com.Ohsul.Ohsul.repository.*;
+import io.awspring.cloud.s3.S3Template;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,6 +42,12 @@ public class ReviewService {
     @Autowired
     BarMoodRepository barMoodRepository;
 
+    @Value("${spring.cloud.aws.s3.bucket}")
+    private String bucket;
+
+    @Autowired
+    private S3Template s3Template;
+
     @Autowired
     S3Service s3Service;
 
@@ -57,6 +65,7 @@ public class ReviewService {
             List<BarMoodEntity> barMoodEntityList = barMoodRepository.findAllByReview_reviewId(i.getReviewId());
 
             BarReviewDTO barReviewDTO = BarReviewDTO.builder()
+                    .reviewId(i.getReviewId())
                     .content(i.getContent())
                     .score(i.getScore())
                     .reviewImg(i.getReviewImg())
@@ -207,7 +216,7 @@ public class ReviewService {
         barMusicRepository.deleteAll(barMusicEntityList);
         barMoodRepository.deleteAll(barMoodEntityList);
 
-//        s3Service.deleteReviewImg(review.getReviewImg());
+        s3Service.deleteReviewImg(review.getReviewImg());
         reviewRepository.deleteById(reviewId);
 
         entityManager.flush();
@@ -229,9 +238,12 @@ public class ReviewService {
                 .score(barReview.getScore())
                 .reviewImg(barReview.getReviewImg())
                 .nickname(barReview.getNickname())
-                .alcoholTags(barAlcoholEntityList.stream().map(BarAlcoholEntity::getAlcohol).map(AlcoholEntity::getAlcoholId).collect(Collectors.toList()))
-                .musicTags(barMusicEntityList.stream().map(BarMusicEntity::getMusic).map(MusicEntity::getMusicId).collect(Collectors.toList()))
-                .moodTags(barMoodEntityList.stream().map(BarMoodEntity::getMood).map(MoodEntity::getMoodId).collect(Collectors.toList()))
+                .alcoholTags(barAlcoholEntityList.stream().map(BarAlcoholEntity::getAlcohol)
+                        .map(AlcoholEntity::getAlcoholId).collect(Collectors.toList()))
+                .musicTags(barMusicEntityList.stream().map(BarMusicEntity::getMusic)
+                        .map(MusicEntity::getMusicId).collect(Collectors.toList()))
+                .moodTags(barMoodEntityList.stream().map(BarMoodEntity::getMood)
+                        .map(MoodEntity::getMoodId).collect(Collectors.toList()))
                 .build();
     }
 }
