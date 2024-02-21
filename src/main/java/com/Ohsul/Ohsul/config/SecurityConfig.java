@@ -4,6 +4,7 @@ package com.Ohsul.Ohsul.config;
 import com.Ohsul.Ohsul.security.*;
 import com.Ohsul.Ohsul.service.*;
 import jakarta.servlet.*;
+import jakarta.servlet.http.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.Bean;
@@ -41,14 +42,19 @@ public class SecurityConfig  {
             .logout(auth -> auth
                     .logoutUrl("/api/logout")
                     .logoutSuccessHandler(((request, response, authentication) -> {
+                      // 쿠키 삭제 로직
+                      Cookie cookie = new Cookie("userLoggedIn", null);
+                      cookie.setPath("/");
+                      cookie.setHttpOnly(true);
+                      cookie.setMaxAge(0);
+                      response.addCookie(cookie);
                       response.setStatus(200);
-//                      response.sendRedirect("/main");
                     }))
             )
             .authorizeHttpRequests(authorize -> authorize
                     .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                    .requestMatchers("/api/ohsul/**", "/api/register/**", "/api/login/**","/api/main/**").permitAll() // 예외
-                    .anyRequest().authenticated() // 어떤 요청이라도 인증 필요
+                    .requestMatchers("/api/ohsul/**", "/api/register/**", "/api/login/**","/api/main/**").permitAll()
+                    .anyRequest().authenticated()
             );
     http.addFilterAfter(customAuthFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
@@ -58,14 +64,14 @@ public class SecurityConfig  {
     CorsConfiguration config = new CorsConfiguration();
 
     // cors 설정
-    config.setAllowCredentials(true); // 실제 응답을 보낼 때, 브라우저에게 자격 증명과 함께 요청을 보낼 수 있도록 허용합니다.
-    config.setAllowedOriginPatterns(Arrays.asList("*")); // 모든 원본에서의 요청을 허용합니다.
-    config.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PUT", "PATCH")); // 허용할 HTTP 메서드를 설정합니다.
-    config.setAllowedHeaders(Arrays.asList("*")); // 모든 헤더의 요청을 허용합니다.
+    config.setAllowCredentials(true);
+    config.setAllowedOriginPatterns(Arrays.asList("*"));
+    config.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PUT", "PATCH"));
+    config.setAllowedHeaders(Arrays.asList("*"));
 
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", config); // 모든 경로에 대해 위에서 설정한 CORS 설정을 적용합니다.
+    source.registerCorsConfiguration("/**", config);
 
     return source;
   };

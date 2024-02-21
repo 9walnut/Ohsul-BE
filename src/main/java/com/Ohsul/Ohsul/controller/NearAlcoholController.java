@@ -15,9 +15,6 @@ import java.util.*;
 public class NearAlcoholController {
   private final NearAlcoholService nearAlcoholService;
 
-//  public NearAlcoholController(NearAlcoholService nearAlcoholService) {
-//    this.nearAlcoholService = nearAlcoholService;
-//  }
   @PostMapping("")
   public ResponseEntity<List<BarListDTO>> getNearBar(@RequestBody List<String> telephone){
     List<BarListDTO> bars = nearAlcoholService.findBarsByTelephone(telephone);

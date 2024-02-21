@@ -18,22 +18,34 @@ public class MyPageController {
   // 마이페이지 렌더링
   @GetMapping("")
   public ResponseEntity<?> getUserProfile(@AuthenticationPrincipal String userId) {
-    UserFavoriteDTO userProfile = myPageService.getUserProfile(userId);
-    return new ResponseEntity<>(userProfile, HttpStatus.OK);
+    try {
+      UserFavoriteDTO userProfile = myPageService.getUserProfile(userId);
+      return new ResponseEntity<>(userProfile, HttpStatus.OK);
+    } catch (Exception e){
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
   }
 
   // 마이페이지 내 정보 조회
   @GetMapping("/info")
   public ResponseEntity<?> getUserProfileInfo(@AuthenticationPrincipal String userId){
-    MyPageDTO userProfileInfo = myPageService.getUserProfileInfo(userId);
-    return new ResponseEntity<>(userProfileInfo, HttpStatus.OK);
+    try {
+      MyPageDTO userProfileInfo = myPageService.getUserProfileInfo(userId);
+      return new ResponseEntity<>(userProfileInfo, HttpStatus.OK);
+    } catch (Exception e){
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
   }
 
   // 회원 탈퇴
   @DeleteMapping("")
   public ResponseEntity<String> deleteUser(@AuthenticationPrincipal String userId) {
-    myPageService.deleteUser(userId);
-    return new ResponseEntity<>("회원 탈퇴 완료", HttpStatus.OK);
+    try {
+      myPageService.deleteUser(userId);
+      return new ResponseEntity<>("회원 탈퇴 완료", HttpStatus.OK);
+    } catch (Exception e){
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
   }
 
   // 내 정보 수정
@@ -45,23 +57,22 @@ public class MyPageController {
   // 즐겨찾기 버튼
   @GetMapping("/favorite")
   public ResponseEntity<?> getFavorite(@AuthenticationPrincipal String userId){
-    UserFavoriteDTO userFavorite = myPageService.getUserProfile(userId);
-    return new ResponseEntity<>(userFavorite, HttpStatus.OK);
+    try {
+      UserFavoriteDTO userFavorite = myPageService.getUserProfile(userId);
+      return new ResponseEntity<>(userFavorite, HttpStatus.OK);
+    } catch (Exception e){
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
   }
 
   // 작성한 리뷰
   @GetMapping("/myReview")
   public ResponseEntity<?> getMyReview(@AuthenticationPrincipal String userId){
-    UserReviewDTO userReview = myPageService.getUserReview(userId);
-    return new ResponseEntity<>(userReview, HttpStatus.OK);
+    try {
+      UserReviewDTO userReview = myPageService.getUserReview(userId);
+      return new ResponseEntity<>(userReview, HttpStatus.OK);
+    } catch (Exception e){
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
   }
-
-  // 리뷰 수정
-
-  // 리뷰 삭제
-
-  // 내 오술태그 조회
-
-  // 태그 수정
-
 }

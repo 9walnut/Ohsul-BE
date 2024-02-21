@@ -27,7 +27,7 @@ public class UserController {
 
   // 로그인 요청
   @PostMapping("/login")
-  public ResponseEntity<?> loginUser(HttpSession session ,@RequestBody UserDTO userDTO) {
+  public ResponseEntity<?> loginUser(HttpSession session, HttpServletResponse response ,@RequestBody UserDTO userDTO) {
     try{
       UserEntity user = userService.login(userDTO.getUserId(), userDTO.getUserPw());
 
@@ -39,29 +39,17 @@ public class UserController {
               .userName(user.getUserName())
               .userNickname(user.getUserNickname())
               .build();
-      session.setAttribute("userId", user.getUserId());
+       session.setAttribute("userId", user.getUserId());
+       Cookie customCookie = new Cookie("userLoggedIn", user.getUserId());
+       customCookie.setHttpOnly(true);
+       customCookie.setPath("/");
+       response.addCookie(customCookie);
+
       return ResponseEntity.ok().body(responseUserDTO);
     } catch (Exception e){
       return ResponseEntity.badRequest().body(e.getMessage());
     }
   }
-
-  // 로그아웃 요청
-//   SecurityConfig로 대체
-//  @PostMapping("/logout")
-//  public ResponseEntity<?> logoutUser(HttpServletRequest request) {
-//    try {
-//      // 세션 가져오기
-//      HttpSession session = request.getSession(false);
-//      // 세션이 존재하면 무효화
-//      if (session != null) {
-//        session.invalidate();
-//      }
-//      return ResponseEntity.ok().body("Logout successful");
-//    } catch (Exception e) {
-//      return ResponseEntity.badRequest().body(e.getMessage());
-//    }
-//  }
 
   // 회원가입 페이지
   @GetMapping("/register")
@@ -94,13 +82,22 @@ public class UserController {
   // 아이디 중복 확인
   @PostMapping("/register/userIdCheck")
   public ResponseEntity<?> checkUserIdDuplicate(@RequestBody UserIdCheckDTO req) {
-    boolean result = userService.checkLoginIdDuplicate(req.getUserId());
-    return new ResponseEntity<>(result, HttpStatus.OK);
+    try {
+      boolean result = userService.checkLoginIdDuplicate(req.getUserId());
+      return new ResponseEntity<>(result, HttpStatus.OK);
+    } catch (Exception e){
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
   }
+
   // 닉네임 중복 확인
   @PostMapping("/register/userNicknameCheck")
   public ResponseEntity<?> checkNicknameDuplicate(@RequestBody UserNicknameCheckDTO req) {
-    boolean result = userService.checkNicknameDuplicate(req.getUserNickname());
-    return new ResponseEntity<>(result, HttpStatus.OK);
+    try {
+      boolean result = userService.checkNicknameDuplicate(req.getUserNickname());
+      return new ResponseEntity<>(result, HttpStatus.OK);
+    } catch (Exception e){
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
   }
 }
