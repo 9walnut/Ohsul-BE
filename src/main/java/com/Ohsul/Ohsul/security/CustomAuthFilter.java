@@ -20,10 +20,8 @@ public class CustomAuthFilter extends OncePerRequestFilter {
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
     try {
       HttpSession sesseion = request.getSession();
-      log.warn("session id {}", sesseion.getId());
 
       Object userId = sesseion.getAttribute("userId");
-      log.warn("userNumber {}", userId);
       if(userId != null){
         Authentication authentication = new UsernamePasswordAuthenticationToken(String.valueOf(userId), null, AuthorityUtils.NO_AUTHORITIES);
         SecurityContextHolder.getContext().setAuthentication(authentication);
