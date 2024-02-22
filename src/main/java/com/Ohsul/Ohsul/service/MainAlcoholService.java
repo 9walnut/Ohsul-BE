@@ -26,10 +26,11 @@ public class MainAlcoholService {
             return barsByAddress.stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
-    // 평균 score가 4점 이상인 barId 반환
-    public List<BarEntity> getAllBarByScore() {
+    // 평균 score가 4점 이상인 barId 정보 반환
+    public List<BarListDTO> getAllBarByScore() {
         List<Integer> barIds = reviewRepository.findBarAByAvgScore();
-        return barRepository.findAllByBarIdIn(barIds);
+        List<BarEntity> bars = barRepository.findAllByBarIdIn(barIds);
+        return bars.stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
     private BarListDTO convertEntityToDto(BarEntity barentity) {
