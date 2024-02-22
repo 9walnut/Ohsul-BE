@@ -3,13 +3,10 @@ package com.Ohsul.Ohsul.controller;
 import com.Ohsul.Ohsul.dto.BarReviewDTO;
 import com.Ohsul.Ohsul.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/ohsul")
