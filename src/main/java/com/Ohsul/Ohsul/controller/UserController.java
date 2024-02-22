@@ -5,6 +5,7 @@ import com.Ohsul.Ohsul.entity.*;
 import com.Ohsul.Ohsul.service.*;
 import jakarta.servlet.http.*;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.*;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
+@Slf4j
 public class UserController {
   @Autowired
   UserService userService;
@@ -28,6 +30,7 @@ public class UserController {
   // 로그인 요청
   @PostMapping("/login")
   public ResponseEntity<?> loginUser(HttpSession session, HttpServletResponse response ,@RequestBody UserDTO userDTO) {
+    log.warn("post login");
     try{
       UserEntity user = userService.login(userDTO.getUserId(), userDTO.getUserPw());
 
