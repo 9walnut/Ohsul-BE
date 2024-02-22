@@ -1,6 +1,5 @@
 name: Java CI with Gradle
 
-# 동작 조건 설정 : main 브랜치에 push 혹은 pull request가 발생할 경우 동작한다.
 on:
   push:
     branches: [ "develop" ]
@@ -11,7 +10,6 @@ permissions:
   contents: read
 
 jobs:
-  # Spring Boot 애플리케이션을 빌드하여 도커허브에 푸시하는 과정
   build-docker-image:
     runs-on: ubuntu-latest
     steps:
@@ -49,16 +47,15 @@ jobs:
       run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/ohsul-be
 
   run-docker-image-on-ec2:
-    # build-docker-image (위)과정이 완료되어야 실행됩니다.
     needs: build-docker-image
     runs-on: self-hosted
 
     steps:
-      # 1. 최신 이미지를 풀받습니다
+      # 1. 최신 이미지를 풀
       - name: docker pull
         run: sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ohsul-be
       
-      # 2. 기존의 컨테이너를 중지시킵니다
+      # 2. 기존의 컨테이너를 중지
       - name: docker stop container
         run: sudo docker stop Ohsul-be || true
 
@@ -66,7 +63,7 @@ jobs:
       - name: docker remove container
         run: sudo docker rm Ohsul-be || true
 
-      # 4 최신 이미지를 컨테이너화하여 실행시킵니다
+      # 4 최신 이미지를 컨테이너화
       - name: docker run new container
         run: sudo docker run --name Ohsul-be --network ohsul-net -v /etc/letsencrypt/live/ohsul.site:/app/src/main/resources -d -p 8080:8080 -p 8443:8443 -e MARIADB_USERNAME=${{ secrets.MARIADB_USERNAME }} -e MARIADB_HOST=${{ secrets.MARIADB_HOST }} -e MARIADB_PASSWORD=${{ secrets.MARIADB_PASSWORD }} -e PKCSPW=${{ secrets.PKCSPW }} ${{ secrets.DOCKERHUB_USERNAME }}/ohsul-be
 
