@@ -15,7 +15,7 @@ public class MainController {
     MainAlcoholService mainAlcoholService;
 
     @GetMapping("/{curAddress}")
-    public ResponseEntity<?> getAllBarByAddress (@PathVariable String curAddress) {
+    public ResponseEntity<?> getBarByAddress (@PathVariable String curAddress) {
        try {
            return ResponseEntity.ok().body(mainAlcoholService.getAllBarByAddress(curAddress));
        } catch(Exception e) {
@@ -25,7 +25,7 @@ public class MainController {
 
     // 별점 평균이 4점 이상인 가게 정보 반환
     @GetMapping("/hotBar")
-    public ResponseEntity<?> getAllBarByScore () {
+    public ResponseEntity<?> getBarByScore () {
         try {
             return ResponseEntity.ok().body(mainAlcoholService.getAllBarByScore());
         } catch(Exception e) {
