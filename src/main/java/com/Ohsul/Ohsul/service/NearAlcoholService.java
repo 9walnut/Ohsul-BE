@@ -21,8 +21,13 @@ public class NearAlcoholService {
     this.barRepository = barRepository;
   }
 
-  public List<BarListDTO> findBarsByTelephone(List<String> telephone) {
-    List<BarEntity> bars = barRepository.findAllByTelephoneIn(telephone);
+  public List<BarListDTO> findBarsByTelephoneAndName(List<String> telephones, List<String> barNames) {
+    List<BarEntity> bars = barRepository.findAllByTelephoneIn(telephones);
+
+    if (bars.isEmpty() && !barNames.isEmpty()) {
+      bars = barRepository.findByBarNameIn(barNames);
+    }
+
     return bars.stream().map(this::convertEntityToDto).collect(Collectors.toList());
   }
 
