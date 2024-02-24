@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 @Entity
 @Getter
 @Setter
@@ -30,6 +33,9 @@ public class ReviewEntity {
 
     @Column(name = "reviewPw", length = 20)
     private String reviewPw;
+
+    @Column(name = "date")
+    private Timestamp date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "barId")
