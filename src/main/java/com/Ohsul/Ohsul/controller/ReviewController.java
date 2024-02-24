@@ -27,7 +27,7 @@ public class ReviewController {
 
     // 리뷰 등록 (이미지 데이터까지 한 번에)
     @PostMapping("/{barId}/review")
-    public ResponseEntity<?> createReview(@PathVariable Integer barId, @RequestPart MultipartFile reviewImg,
+    public ResponseEntity<?> createReview(@PathVariable Integer barId, @RequestParam(required = false) MultipartFile reviewImg,
                                           @RequestPart BarReviewDTO barReviewDTO,
                                           @AuthenticationPrincipal String userId) {
         try {
