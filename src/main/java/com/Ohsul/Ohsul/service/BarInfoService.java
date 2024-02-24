@@ -38,6 +38,7 @@ public class BarInfoService {
         List<BarMoodEntity> barMoodEntityList = barMoodRepository.findAllByBar_BarId(barInfo.getBarId());
 
         return BarDTO.builder()
+                .barId(barInfo.getBarId())
                 .barName(barInfo.getBarName())
                 .barImg(barInfo.getBarImg())
                 .telephone(barInfo.getTelephone())

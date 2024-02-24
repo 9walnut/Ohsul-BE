@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Builder
 public class BarDTO {
+    private Integer barId;
     private String barName;
     private String barImg;
     private String telephone;
