@@ -3,6 +3,7 @@ package com.Ohsul.Ohsul.controller;
 import com.Ohsul.Ohsul.dto.*;
 import com.Ohsul.Ohsul.service.*;
 import lombok.*;
+import org.checkerframework.checker.units.qual.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
@@ -53,6 +54,20 @@ public class MyPageController {
   public void updateUserProfile(@AuthenticationPrincipal String userId, @RequestBody MyPageDTO myPageDTO){
     myPageService.updateUserProfile(userId, myPageDTO);
   }
+
+  // 비밀번호 확인
+  @PostMapping("/info/userPwCheck")
+  public ResponseEntity<Boolean> checkUserPw(@AuthenticationPrincipal String userId, @RequestBody UserPwCheckDTO userPwCheckDTO){
+      boolean isPasswordCorrect = myPageService.checkUserPw(userId, userPwCheckDTO);
+      return ResponseEntity.ok(isPasswordCorrect);
+  }
+
+  // 비밀번호 수정
+  @PatchMapping("/info/userPwEdit")
+  public void updateUserPw(@AuthenticationPrincipal String userId, @RequestBody UserPwUpdateDTO userPwUpdateDTO){
+    myPageService.updateUserPassword(userId, userPwUpdateDTO);
+  }
+
 
   // 즐겨찾기 버튼
   @GetMapping("/favorite")
