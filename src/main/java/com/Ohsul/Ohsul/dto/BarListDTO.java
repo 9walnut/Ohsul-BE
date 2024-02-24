@@ -9,12 +9,6 @@ import java.util.*;
 public class BarListDTO {
   private String barName;
   private String barImg;
-  private List<String> telephone;
-
-  private String description;
-  private Boolean snack;
-  private Boolean toilet;
-  private Boolean parkingArea;
 
   private List<Integer> alcoholTags;
   private List<Integer> musicTags;

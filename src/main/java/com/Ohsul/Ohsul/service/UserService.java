@@ -3,21 +3,24 @@ package com.Ohsul.Ohsul.service;
 import com.Ohsul.Ohsul.domain.*;
 import com.Ohsul.Ohsul.dto.*;
 
-import com.Ohsul.Ohsul.entity.UserEntity;
+import com.Ohsul.Ohsul.entity.*;
 import com.Ohsul.Ohsul.repository.*;
 import jakarta.transaction.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.stereotype.*;
 
 import java.util.*;
+import java.util.stream.*;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class UserService {
   private UserRepository userRepository;
+  private FavoriteRepository favoriteRepository;
   @Autowired
   BCryptPasswordEncoder passwordEncoder;
 
@@ -26,14 +29,9 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-//  public  Optional<UserEntity> findOne(String userId){
-//    return userRepository.findByUserId(userId);
-//  }
-
   // 로그인
   public UserEntity login(String userId, String userPw){
     Optional<UserEntity> searchUserOpt = userRepository.findByUserId(userId);
-
     if (searchUserOpt.isPresent() && passwordEncoder.matches(userPw, searchUserOpt.get().getUserPw())) {
       return searchUserOpt.get();
     }

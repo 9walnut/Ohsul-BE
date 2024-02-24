@@ -2,6 +2,7 @@ package com.Ohsul.Ohsul.controller;
 
 import com.Ohsul.Ohsul.dto.*;
 import com.Ohsul.Ohsul.entity.*;
+import com.Ohsul.Ohsul.repository.*;
 import com.Ohsul.Ohsul.service.*;
 import jakarta.servlet.http.*;
 import lombok.*;
@@ -11,6 +12,9 @@ import org.springframework.http.*;
 import org.springframework.security.crypto.bcrypt.*;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.*;
+import java.util.stream.*;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -18,6 +22,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
   @Autowired
   UserService userService;
+
+  @Autowired
+  FavoriteRepository favoriteRepository;
   @Autowired
   BCryptPasswordEncoder passwordEncoder;
 
@@ -37,11 +44,19 @@ public class UserController {
       if(user == null) {
         throw new RuntimeException("login failed");
       }
+
+      // 즐겨찾기 목록 조회
+      List<FavoriteEntity> favorites = favoriteRepository.findByUser_UserId(user.getUserId());
+      List<FavoriteDTO> favoriteDTOs = favorites.stream()
+              .map(favorite -> new FavoriteDTO())
+              .collect(Collectors.toList());
+
       UserDTO responseUserDTO = UserDTO.builder()
               .userId(user.getUserId())
               .userNumber(user.getUserNumber())
               .userName(user.getUserName())
               .userNickname(user.getUserNickname())
+              .favorites(favoriteDTOs)
               .build();
        session.setAttribute("userId", user.getUserId());
        session.setMaxInactiveInterval(3600);

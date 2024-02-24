@@ -33,12 +33,13 @@ public class MyPageService {
     UserEntity userEntity = userRepository.findByUserId(userId)
             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userId));
 
-    // 사용자가 즐겨찾기한 항목 조회
-    List<FavoriteEntity> favorites = favoriteRepository.findByUser(userEntity);
+    // 사용자가 즐겨찾기한 항목 조회 (수정된 부분)
+    List<FavoriteEntity> favorites = favoriteRepository.findByUser_UserId(userId); // 여기를 수정했습니다.
 
     List<FavoriteDTO> favoriteDTOs = favorites.stream().map(favorite -> {
       BarEntity bar = favorite.getBar();
       FavoriteDTO dto = new FavoriteDTO();
+      // dto에 필요한 정보를 설정합니다. 예: dto.setBarName(bar.getName());
       return dto;
     }).collect(Collectors.toList());
 
@@ -46,8 +47,8 @@ public class MyPageService {
     userProfile.setUserNumber(userEntity.getUserNumber());
     userProfile.setUserId(userEntity.getUserId());
     userProfile.setUserName(userEntity.getUserName());
-    userProfile.setUserPw(userEntity.getUserPw());
     userProfile.setUserNickname(userEntity.getUserNickname());
+    // userProfile.setUserPw(userEntity.getUserPw()); // 비밀번호는 응답에 포함시키지 않는 것이 보안상 좋습니다.
     userProfile.setFavorites(favoriteDTOs);
 
     return userProfile;
