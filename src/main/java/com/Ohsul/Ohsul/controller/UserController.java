@@ -39,6 +39,7 @@ public class UserController {
       }
       UserDTO responseUserDTO = UserDTO.builder()
               .userId(user.getUserId())
+              .userNumber(user.getUserNumber())
               .userName(user.getUserName())
               .userNickname(user.getUserNickname())
               .build();
