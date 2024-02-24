@@ -13,5 +13,6 @@ public class UserFavoriteDTO {
   private String userId;
   private String userName;
   private String userNickname;
+  private String userPw;
   private List<FavoriteDTO> favorites;
 }

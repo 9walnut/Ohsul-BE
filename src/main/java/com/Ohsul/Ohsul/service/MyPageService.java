@@ -46,6 +46,7 @@ public class MyPageService {
     userProfile.setUserNumber(userEntity.getUserNumber());
     userProfile.setUserId(userEntity.getUserId());
     userProfile.setUserName(userEntity.getUserName());
+    userProfile.setUserPw(userEntity.getUserPw());
     userProfile.setUserNickname(userEntity.getUserNickname());
     userProfile.setFavorites(favoriteDTOs);
 
