@@ -9,5 +9,4 @@ public class MyPageDTO {
   private String userId;
   private String userName;
   private String userNickname;
-  private String userPw;
 }

@@ -31,15 +31,13 @@ public class MyPageService {
   // 즐겨찾기 버튼 혼용 중
   public UserFavoriteDTO getUserProfile(String userId) {
     UserEntity userEntity = userRepository.findByUserId(userId)
-            .orElseThrow(() -> new UsernameNotFoundException("User not found: " + userId));
+            .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다" + userId));
 
-    // 사용자가 즐겨찾기한 항목 조회 (수정된 부분)
-    List<FavoriteEntity> favorites = favoriteRepository.findByUser_UserId(userId); // 여기를 수정했습니다.
+    List<FavoriteEntity> favorites = favoriteRepository.findByUser_UserId(userId);
 
     List<FavoriteDTO> favoriteDTOs = favorites.stream().map(favorite -> {
       BarEntity bar = favorite.getBar();
       FavoriteDTO dto = new FavoriteDTO();
-      // dto에 필요한 정보를 설정합니다. 예: dto.setBarName(bar.getName());
       return dto;
     }).collect(Collectors.toList());
 
@@ -48,7 +46,6 @@ public class MyPageService {
     userProfile.setUserId(userEntity.getUserId());
     userProfile.setUserName(userEntity.getUserName());
     userProfile.setUserNickname(userEntity.getUserNickname());
-    // userProfile.setUserPw(userEntity.getUserPw()); // 비밀번호는 응답에 포함시키지 않는 것이 보안상 좋습니다.
     userProfile.setFavorites(favoriteDTOs);
 
     return userProfile;
@@ -84,11 +81,23 @@ public class MyPageService {
     UserEntity userEntity = userRepository.findByUserId(userId)
             .orElseThrow(()->new NoSuchElementException("유저가 없습니다"));
 
-    // 받아온 DTO에서 값을 가져와서 업데이트
     userEntity.changeUserName(myPageDTO.getUserName());
     userEntity.changeUserNickname(myPageDTO.getUserNickname());
-    userEntity.changeUserPw(passwordEncoder.encode(myPageDTO.getUserPw())); // 비밀번호 변경 시 암호화 필요
+    userRepository.save(userEntity);
+  }
+  
+  // 비밀번호 확인
+  public boolean checkUserPw(String userId, UserPwCheckDTO userPwCheckDTO){
+    UserEntity userEntity = userRepository.findByUserId(userId)
+            .orElseThrow(()->new NoSuchElementException("유저가 없습니다"));
+    return passwordEncoder.matches(userPwCheckDTO.getUserPw(), userEntity.getUserPw());
+  }
 
+  //  비밀번호 수정
+  public void updateUserPassword(String userId, UserPwUpdateDTO userPwUpdateDTO){
+    UserEntity userEntity = userRepository.findByUserId(userId)
+            .orElseThrow(()->new NoSuchElementException("유저가 없습니다"));
+    userEntity.changeUserPw(passwordEncoder.encode(userPwUpdateDTO.getUserPw()));
     userRepository.save(userEntity);
   }
 
@@ -114,7 +123,7 @@ public class MyPageService {
       return reviewDTO;
     }).collect(Collectors.toList());
 
-    userReview.setReviews(reviewDTOs); // UserReviewDTO에 리뷰 리스트 설정
+    userReview.setReviews(reviewDTOs);
     return userReview;
   }
 }
