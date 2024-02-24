@@ -87,8 +87,9 @@ public class ReviewService {
 
         Optional<UserEntity> userSearch = userRepository.findByUserId(userId);
         ReviewEntity review;
+        String reviewImgUrl = null;
 
-        String reviewImgUrl = s3Service.uploadReviewImg(reviewImg);
+        if(reviewImg != null) reviewImgUrl = s3Service.uploadReviewImg(reviewImg);
 
         // 회원 리뷰 저장
         if (userSearch.isPresent()) {
