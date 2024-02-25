@@ -52,7 +52,6 @@ public class MyPageService {
   }
 
   // 마이페이지 내 정보 조회
-  // 단순 데이터 전달 목적으로 Setter 사용
   public MyPageDTO getUserProfileInfo(String userId){
     UserEntity userEntity = userRepository.findByUserId(userId)
             .orElseThrow(() -> new UsernameNotFoundException("유저가 없습니다 : " + userId));
