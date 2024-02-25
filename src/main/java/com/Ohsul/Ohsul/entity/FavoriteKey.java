@@ -3,6 +3,7 @@ package com.Ohsul.Ohsul.entity;
 import com.Ohsul.Ohsul.domain.Bar;
 import com.Ohsul.Ohsul.domain.User;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class FavoriteKey implements Serializable {
