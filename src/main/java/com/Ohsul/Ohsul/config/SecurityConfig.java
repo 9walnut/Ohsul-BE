@@ -67,10 +67,8 @@ public class SecurityConfig  {
     // cors 설정
     config.setAllowCredentials(true);
     config.setAllowedOriginPatterns(Arrays.asList("*"));
-//    config.setAllowedOrigins(Arrays.asList("*"));
     config.setAllowedMethods(Arrays.asList("HEAD","POST","GET","DELETE","PUT", "PATCH"));
     config.setAllowedHeaders(Arrays.asList("*"));
-//    config.setAllowedOriginPatterns(Arrays.asList("https://*"));
 
 
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

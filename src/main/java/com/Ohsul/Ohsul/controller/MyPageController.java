@@ -3,8 +3,7 @@ package com.Ohsul.Ohsul.controller;
 import com.Ohsul.Ohsul.dto.*;
 import com.Ohsul.Ohsul.service.*;
 import lombok.*;
-import org.checkerframework.checker.units.qual.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.*;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/mypage")
 public class MyPageController {
 
-  private final MyPageService myPageService;
+  @Autowired
+  MyPageService myPageService;
 
   // 마이페이지 렌더링
   @GetMapping("")
