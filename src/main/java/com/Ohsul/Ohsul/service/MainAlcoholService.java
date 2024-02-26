@@ -35,6 +35,7 @@ public class MainAlcoholService {
 
     private BarListDTO convertEntityToDto(BarEntity barentity) {
         BarListDTO barListDTO = new BarListDTO();
+        barListDTO.setBarId(barentity.getBarId());
         barListDTO.setBarName(barentity.getBarName());
         barListDTO.setBarImg(barentity.getBarImg());
 
