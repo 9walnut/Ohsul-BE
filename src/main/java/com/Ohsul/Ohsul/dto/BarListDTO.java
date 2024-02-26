@@ -7,6 +7,7 @@ import java.util.*;
 @Getter
 @Setter
 public class BarListDTO {
+  private Integer barId;
   private String barName;
   private String barImg;
 
