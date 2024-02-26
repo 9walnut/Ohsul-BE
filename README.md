@@ -28,9 +28,9 @@ https://ohsul.site/
 
 | 프로필  | 이름 | 역할 | 역할 내용 |
 | --- | --- | --- | --- |
-| <img src="https://github.com/9walnut/TheWave/assets/144768130/cbffbe1f-68de-4974-9ba3-1cc76519ead8" width="150" height="150" /> | [권구호](https://github.com/9walnut) | BE | , CI/CD 구축, https 보안 서버 구축, <br /> 로그인(session) / 회원가입 / 마이페이지 / 내 주변 술집 API 구현 |
-| <img src="https://github.com/9walnut/TheWave/assets/144768130/620a9128-de56-4b96-8775-9a37372ab9f1"  width="150" height="150" /> | [이예찬](https://github.com/yeeeeechan) | BE | 기획/문서 작성, DB 설계, 회원 전용 기능 전반(주문하기/결제하기/상품 페이지) API 구현(JWT), , S3 이미지 업로드 기능 구현<br /> SNS 간편 로그인 |
-| <img src="https://github.com/9walnut/TheWave/assets/144768130/81420a4b-c1ca-48ec-a57a-45b8f5224bdd" width="150" height="150" /> | [양현정](https://github.com/hyeoonjeoong) | FE | 관리자 전용 기능 전반(대시보드, 상품 등록/수정/삭제,  회원 관리, 거래 내역 관리) <br /> 페이지네이션, 반응형 디자인 적용 |
+| <img src="https://github.com/9walnut/TheWave/assets/144768130/cbffbe1f-68de-4974-9ba3-1cc76519ead8" width="150" height="150" /> | [권구호](https://github.com/9walnut) | BE | CI/CD 구축, https 보안 서버 구축, <br /> 로그인(session) / 회원가입 / 마이페이지 / 내 주변 술집 API 구현 |
+| <img src="https://github.com/9walnut/TheWave/assets/144768130/620a9128-de56-4b96-8775-9a37372ab9f1"  width="150" height="150" /> | [이예찬](https://github.com/yeeeeechan) | BE | DB 설계, 회원 전용 기능 전반(주문하기/결제하기/상품 페이지) API 구현(JWT), , S3 이미지 업로드 기능 구현<br /> SNS 간편 로그인 |
+| <img src="https://github.com/9walnut/TheWave/assets/144768130/81420a4b-c1ca-48ec-a57a-45b8f5224bdd" width="150" height="150" /> | [양현정](https://github.com/hyeoonjeoong) | FE | 기획/문서 작성, 관리자 전용 기능 전반(대시보드, 상품 등록/수정/삭제,  회원 관리, 거래 내역 관리) <br /> 페이지네이션, 반응형 디자인 적용 |
 | <img src="https://github.com/9walnut/TheWave/assets/144768130/bc0aa2ec-89f0-411a-a538-6de87c1fca4d" width="150" height="150" /> | [정우성](https://github.com/dntjd129) | FE | 메인 공통 반응형 컴포넌트 (Navbar, Footer, Carousel), <br /> 회원 전용 기능 전반(장바구니/주문하기/결제하기/상품 페이지) 구현 |
 
 </div>
@@ -102,9 +102,9 @@ $ node .\app.js
 
 <div align=center> 
 
-| **요구사항 정의서 / API 명세서** | **팀 노션** |
-| :----------: | :----------: |
-| [TheWave_Googlesheet](https://docs.google.com/spreadsheets/d/1RtbeO5gLKY2L9PXQLtN-wkrCOxkJ_HIiNwR-4jxgKNA/edit?usp=sharing) | [TheWave_Notion](https://www.notion.so/TheWave-f74e4e4189904b36a13bd11d4c3bffba?pvs=4) |
+| **팀 노션** |
+| :----------: |
+| [TheWave_Notion](https://generated-teal-d69.notion.site/b28de37f75384e72916a0f82303f92d9?pvs=74) |
 
 </div>
 <br />
