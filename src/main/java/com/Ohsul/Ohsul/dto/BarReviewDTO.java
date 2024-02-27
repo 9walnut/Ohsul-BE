@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -19,6 +20,7 @@ public class BarReviewDTO {
     private String reviewImg;
     private String nickname;
     private String reviewPw;
+    private Date date;
 
     private List<Integer> alcoholTags;
     private List<Integer> musicTags;

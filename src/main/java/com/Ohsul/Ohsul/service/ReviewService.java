@@ -95,7 +95,6 @@ public class ReviewService {
         // 회원 리뷰 저장
         if (userSearch.isPresent()) {
             UserEntity user = userSearch.get();
-            log.error("user 값 {}", user);
 
             review = ReviewEntity.builder()
                     .content(barReviewDTO.getContent())
@@ -175,11 +174,16 @@ public class ReviewService {
         ReviewEntity review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("리뷰 정보 없음"));
 
-        // 기존 리뷰 이미지 s3 삭제
-        s3Service.deleteReviewImg(review.getReviewImg());
-        
-        // 수정 리뷰 이미지 s3 등록
-        String newReviewImgUrl = s3Service.uploadReviewImg(reviewImg);
+        String reviewImgUrl = null;
+        String newReviewImgUrl = null;
+
+        if (reviewImg != null) {
+            // 기존 리뷰 이미지 s3 삭제
+            s3Service.deleteReviewImg(review.getReviewImg());
+
+            // 수정 리뷰 이미지 s3 등록
+            newReviewImgUrl = s3Service.uploadReviewImg(reviewImg);
+        }
 
         // 업데이트를 위한 setter 사용
         review.setContent(barReviewDTO.getContent());
@@ -207,7 +211,7 @@ public class ReviewService {
             barMusicRepository.save(barMusic);
         }
 
-        for(Integer tag : moodTags) {
+        for (Integer tag : moodTags) {
             MoodEntity mood = moodRepository.findById(tag)
                     .orElseThrow(() -> new RuntimeException(tag + " 태그 정보 없음"));
             BarMoodEntity barMood = new BarMoodEntity(bar, mood, review);
@@ -259,6 +263,7 @@ public class ReviewService {
                 .score(barReview.getScore())
                 .reviewImg(barReview.getReviewImg())
                 .nickname(barReview.getNickname())
+                .date(barReview.getDate())
                 .alcoholTags(barAlcoholEntityList.stream().map(BarAlcoholEntity::getAlcohol)
                         .map(AlcoholEntity::getAlcoholId).collect(Collectors.toList()))
                 .musicTags(barMusicEntityList.stream().map(BarMusicEntity::getMusic)
