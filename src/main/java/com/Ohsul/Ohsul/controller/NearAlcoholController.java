@@ -16,8 +16,8 @@ public class NearAlcoholController {
   private final NearAlcoholService nearAlcoholService;
 
   @PostMapping("")
-  public ResponseEntity<List<BarListDTO>> getNearBar(@RequestBody BarSearchDTO request){
-    List<BarListDTO> bars = nearAlcoholService.findBarsByTelephoneAndName(request.getTelephones(), request.getBarNames());
+  public ResponseEntity<List<BarListDTO>> getNearBar(@RequestBody List<BarSearchDTO> requests){
+    List<BarListDTO> bars = nearAlcoholService.findBarsByRequestList(requests);
     return ResponseEntity.ok(bars);
   }
 }

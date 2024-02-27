@@ -18,13 +18,13 @@ public class BarEntity {
 
   @Column(name = "roadAddress", nullable = false)
   private String roadAddress;
-  @Column(name = "localAddress", nullable = false)
+  @Column(name = "localAddress")
   private String localAddress;
 
-  @Column(name = "description", nullable = false)
+  @Column(name = "description")
   private String description;
 
-  @Column(name = "telephone", nullable = false, length = 20)
+  @Column(name = "telephone", length = 20)
   private String telephone;
 
   @Column(name = "barImg")

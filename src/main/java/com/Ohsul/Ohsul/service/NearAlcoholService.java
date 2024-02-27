@@ -21,14 +21,37 @@ public class NearAlcoholService {
     this.barRepository = barRepository;
   }
 
-  public List<BarListDTO> findBarsByTelephoneAndName(List<String> telephones, List<String> barNames) {
-    List<BarEntity> bars = barRepository.findAllByTelephoneIn(telephones);
+  public List<BarListDTO> findBarsByRequestList(List<BarSearchDTO> requests) {
+    Set<BarEntity> barSet = new HashSet<>();
+    for (BarSearchDTO request : requests) {
+      if (!request.getTelephone().isEmpty() || !request.getBarName().isEmpty() || !request.getRoadAddress().isEmpty()) {
+        BarEntity bar = new BarEntity();
+        if (!request.getTelephone().isEmpty()) {
+          bar.setTelephone(request.getTelephone().get(0));
+        }
+        if (!request.getBarName().isEmpty()) {
+          bar.setBarName(request.getBarName().get(0));
+        }
+        if (!request.getRoadAddress().isEmpty()) {
+          bar.setRoadAddress(request.getRoadAddress().get(0));
+        }
 
-    if (bars.isEmpty() && !barNames.isEmpty()) {
-      bars = barRepository.findByBarNameIn(barNames);
+        // DB에 저장
+        barRepository.save(bar);
+        barSet.add(bar);
+      } else {
+        if (!request.getTelephone().isEmpty()) {
+          barSet.addAll(barRepository.findAllByTelephoneIn(request.getTelephone()));
+        }
+        if (!request.getBarName().isEmpty()) {
+          barSet.addAll(barRepository.findByBarNameIn(request.getBarName()));
+        }
+        for (String address : request.getRoadAddress()) {
+          barSet.addAll(barRepository.findAllByRoadAddressIn(Collections.singletonList(address)));
+        }
+      }
     }
-
-    return bars.stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    return barSet.stream().map(this::convertEntityToDto).collect(Collectors.toList());
   }
 
   private BarListDTO convertEntityToDto(BarEntity barentity) {
