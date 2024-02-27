@@ -15,4 +15,5 @@ public class UserFavoriteDTO {
   private String userNickname;
   private String userPw;
   private List<FavoriteDTO> favorites;
+  private Double avgScore;
 }
