@@ -11,7 +11,10 @@
 ## 📌 배포 주소
 
 https://ohsul.site/
-<br /><br />
+<br />
+
+## 📌 FE 저장소
+https://github.com/9walnut/Ohsul-FE
 
 ## 📌 주요 기능
 
@@ -117,7 +120,7 @@ $ java -jar ohsul-be-3.1.5-SNAPSHOT.jav
 
 | **시스템 구성** |
 | :----------: |
-| <img src='https://github.com/9walnut/Ohsul-BE/assets/100561986/af5078ba-ab0b-4ef8-bd45-435bf4655cac' width="800" /> |
+| <img src='[https://github.com/9walnut/Ohsul-BE/assets/100561986/af5078ba-ab0b-4ef8-bd45-435bf4655cac](https://github.com/9walnut/Ohsul-BE/assets/100561986/b20a65b1-0afa-408e-8d31-021305c460b2)' width="800" /> |
 
 
 ## 🛠️ 기술 스택
