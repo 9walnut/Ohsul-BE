@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -81,15 +82,15 @@ public class ReviewService {
 
     // 리뷰 등록
     @Transactional
-    public Boolean createReview(Integer barId, MultipartFile reviewImg, BarReviewDTO barReviewDTO, String userId) {
+    public BarReviewDTO createReview(Integer barId, MultipartFile reviewImg, BarReviewDTO barReviewDTO, String userId) {
         BarEntity bar = barRepository.findById(barId)
-                .orElseThrow(()-> new RuntimeException("가게 정보 없음"));
+                .orElseThrow(() -> new RuntimeException("가게 정보 없음"));
 
         Optional<UserEntity> userSearch = userRepository.findByUserId(userId);
         ReviewEntity review;
         String reviewImgUrl = null;
 
-        if(reviewImg != null) reviewImgUrl = s3Service.uploadReviewImg(reviewImg);
+        if (reviewImg != null) reviewImgUrl = s3Service.uploadReviewImg(reviewImg);
 
         // 회원 리뷰 저장
         if (userSearch.isPresent()) {
@@ -135,13 +136,21 @@ public class ReviewService {
             barMusicRepository.save(barMusic);
         }
 
-        for(Integer tag : moodTags) {
+        for (Integer tag : moodTags) {
             MoodEntity mood = moodRepository.findById(tag)
                     .orElseThrow(() -> new RuntimeException(tag + " 태그 정보 없음"));
             BarMoodEntity barMood = new BarMoodEntity(bar, mood, review);
             barMoodRepository.save(barMood);
         }
-        return true;
+        return BarReviewDTO.builder()
+                .content(review.getContent())
+                .score(review.getScore())
+                .reviewImg(review.getReviewImg())
+                .nickname(review.getNickname())
+                .alcoholTags(alcoholTags)
+                .musicTags(musicTags)
+                .moodTags(moodTags)
+                .build();
     }
 
     // 리뷰 등록(사진)
