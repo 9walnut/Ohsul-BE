@@ -1,7 +1,7 @@
 # 오늘의 술 - !!!리드미 수정중!!!
 
 아무데나 말고, 내가 가고 싶은 술집만 골라드릴게요.<br />
-<br /><br />
+<br />
 
 ## 🗓️ 프로젝트 기간
 
@@ -117,7 +117,7 @@ $ java -jar ohsul-be-3.1.5-SNAPSHOT.jav
 
 | **시스템 구성** |
 | :----------: |
-| <img src='https://github.com/9walnut/Ohsul-BE/assets/100561986/301f3902-1e6f-4a09-9391-81e41a478243' width="800" /> |
+| <img src='https://github.com/9walnut/Ohsul-BE/assets/100561986/af5078ba-ab0b-4ef8-bd45-435bf4655cac' width="800" /> |
 
 
 ## 🛠️ 기술 스택
@@ -135,9 +135,10 @@ $ java -jar ohsul-be-3.1.5-SNAPSHOT.jav
 <br />
 
 ### Back-end
-<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/JAVA-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" /> 
 <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white" /> 
-<img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gardle&logoColor=white" /> 
+<img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gradle&logoColor=white" /> 
 <img src="https://img.shields.io/badge/mariaDB-003545?style=for-the-badge&logo=mariaDB&logoColor=white" /> 
 <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white" /> 
 <br />
