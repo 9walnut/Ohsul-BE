@@ -30,4 +30,8 @@ public class BarMusicEntity {
     @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
     private ReviewEntity review;
 
+    public Integer getMusicId() {
+        return music.getMusicId();
+    }
+
 }

@@ -3,6 +3,7 @@ package com.Ohsul.Ohsul.entity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -34,8 +35,9 @@ public class ReviewEntity {
     @Column(name = "reviewPw", length = 20)
     private String reviewPw;
 
+    @Temporal(TemporalType.DATE)
     @Column(name = "date")
-    private Timestamp date;
+    private Date date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "barId")

@@ -37,7 +37,14 @@ public class MyPageService {
 
     List<FavoriteDTO> favoriteDTOs = favorites.stream().map(favorite -> {
       BarEntity bar = favorite.getBar();
+      List<ReviewEntity> reviews = reviewRepository.findAllByBar_BarId(bar.getBarId());
+      double avgScore = reviews.stream()
+              .mapToDouble(ReviewEntity::getScore)
+              .average()
+              .orElse(Double.NaN);
       FavoriteDTO dto = new FavoriteDTO();
+      dto.setBar(bar);
+      dto.setAvgScore(avgScore);
       return dto;
     }).collect(Collectors.toList());
 
@@ -117,8 +124,28 @@ public class MyPageService {
 
     List<ReviewDTO> reviewDTOs = reviews.stream().map(review -> {
       ReviewDTO reviewDTO = new ReviewDTO();
+      reviewDTO.setBarId(review.getBar().getBarId());
       reviewDTO.setReviewId(review.getReviewId());
       reviewDTO.setContent(review.getContent());
+      reviewDTO.setReviewImg(review.getReviewImg());
+
+      BarEntity bar = review.getBar();
+
+      List<Integer> alcoholTags = bar.getBarAlcohols().stream()
+              .map(BarAlcoholEntity::getAlcoholId)
+              .collect(Collectors.toList());
+      reviewDTO.setAlcoholTags(alcoholTags);
+
+      List<Integer> musicTags = bar.getBarMusics().stream()
+              .map(BarMusicEntity::getMusicId)
+              .collect(Collectors.toList());
+      reviewDTO.setMusicTags(musicTags);
+
+      List<Integer> moodTags = bar.getBarMoods().stream()
+              .map(BarMoodEntity::getMoodId)
+              .collect(Collectors.toList());
+      reviewDTO.setMoodTags(moodTags);
+
       return reviewDTO;
     }).collect(Collectors.toList());
 

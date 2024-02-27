@@ -30,4 +30,8 @@ public class BarAlcoholEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
     private ReviewEntity review;
+
+    public Integer getAlcoholId() {
+        return alcohol.getAlcoholId();
+    }
 }
