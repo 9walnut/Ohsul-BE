@@ -29,7 +29,7 @@ https://ohsul.site/
 | 프로필  | 이름 | 역할 | 역할 내용 |
 | --- | --- | --- | --- |
 | <img src="https://github.com/9walnut/TheWave/assets/144768130/cbffbe1f-68de-4974-9ba3-1cc76519ead8" width="150" height="150" /> | [권구호](https://github.com/9walnut) | BE | CI / CD 구축, https 보안 서버 구축, <br /> 로그인(session) / 회원가입 / 마이페이지 / 내 주변 술집 API 구현 |
-| <img src="https://github.com/9walnut/TheWave/assets/144768130/620a9128-de56-4b96-8775-9a37372ab9f1"  width="150" height="150" /> | [이예찬](https://github.com/yeeeeechan) | BE | DB 설계, 메인페이지 / 즐겨찾기 / 리뷰 API 구현, S3 이미지 업로드 기능 구현 |
+| <img src="https://github.com/9walnut/TheWave/assets/144768130/620a9128-de56-4b96-8775-9a37372ab9f1"  width="150" height="150" /> | [이예찬](https://github.com/yeeeeechan) | BE | DB 설계, 메인페이지 / 즐겨찾기 / 리뷰 API 구현 <br/> S3 이미지 업로드 기능 구현 |
 | <img src="https://github.com/9walnut/TheWave/assets/144768130/81420a4b-c1ca-48ec-a57a-45b8f5224bdd" width="150" height="150" /> | [양현정](https://github.com/hyeoonjeoong) | FE | 기획/문서 작성 <br /> 페이지네이션, 반응형 디자인 적용 |
 | <img src="https://github.com/9walnut/TheWave/assets/144768130/bc0aa2ec-89f0-411a-a538-6de87c1fca4d" width="150" height="150" /> | [정우성](https://github.com/dntjd129) | FE | 메인 공통 반응형 컴포넌트 (Navbar, Footer, Carousel), <br /> 회원 전용 기능 전반(장바구니/주문하기/결제하기/상품 페이지) 구현 |
 
@@ -47,9 +47,9 @@ $ git clone https://github.com/9walnut/Ohsul-BE.git
 ### Back-end
 
 ```
-$ cd server
-$ npm install
-$ node .\app.js
+$ ./gradlew.bat build
+$ cd build/libs
+$ java -jar ohsul-be-3.1.5-SNAPSHOT.jav
 ```
 
 <br />
@@ -112,29 +112,41 @@ $ node .\app.js
   
 | **개체-관계 모델(ERD)** |
 | :----------: |
-| <img src='https://github.com/9walnut/TheWave/assets/144768130/cb4944e5-13c7-4575-ac9a-ef6e91fb4db5' width="800" /> |
+| <img src='https://github.com/9walnut/Ohsul-BE/assets/100561986/5e668294-a134-4ea7-9b07-88251098d3b2' width="800" /> |
 
 
 | **시스템 구성** |
 | :----------: |
-| <img src='https://github.com/9walnut/TheWave/assets/144768130/e718ac2a-4707-4d99-a3f1-ec247c0f5674' width="800" /> |
+| <img src='https://github.com/9walnut/Ohsul-BE/assets/100561986/c6ff50fe-2b0a-4207-9548-12951cf27f574' width="800" /> |
 
 
 ## 🛠️ 기술 스택
 
 ### Front-end
 
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white" /> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white" /> <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black" /> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" /> <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=black" /> <img src="https://img.shields.io/badge/nginx-BA2BD2?style=for-the-badge&logo=nginx&logoColor=black" /> <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=black" /> <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=black" />
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white" /> 
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white" /> 
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black" /> 
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" /> 
+<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=black" /> 
+<img src="https://img.shields.io/badge/nginx-BA2BD2?style=for-the-badge&logo=nginx&logoColor=black" /> 
+<img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=black" /> 
+<img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=black" />
 <br />
 
 ### Back-end
-
-<img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white" /> <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white" /> <img alt="Sequelize" src="https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white" /> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white" /> <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white" /> <img src="https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white" /> <img src="https://img.shields.io/badge/jsonwebtokens-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" />
+<img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white">
+<img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white" /> 
+<img src="https://img.shields.io/badge/gradle-02303A?style=for-the-badge&logo=gardle&logoColor=white" /> 
+<img src="https://img.shields.io/badge/mariaDB-003545?style=for-the-badge&logo=mariaDB&logoColor=white" /> 
+<img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white" /> 
 <br />
 
 ### DevOps Tools
 
-<img src="https://img.shields.io/badge/Jenkins-%23D24939?style=for-the-badge&logo=Jenkins&logoColor=white"> <img src="https://img.shields.io/badge/Docker-%232496ED?style=for-the-badge&logo=docker&logoColor=white">
+<img src="https://img.shields.io/badge/githubactions-0288FF?style=for-the-badge&logo=githubactions&logoColor=white"> 
+<img src="https://img.shields.io/badge/Docker-%232496ED?style=for-the-badge&logo=docker&logoColor=white">
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
 <br />
 
 <details>
