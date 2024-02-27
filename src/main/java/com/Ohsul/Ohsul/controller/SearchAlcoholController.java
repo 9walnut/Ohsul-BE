@@ -1,6 +1,6 @@
 package com.Ohsul.Ohsul.controller;
 
-import com.Ohsul.Ohsul.dto.BarSearchDTO;
+import com.Ohsul.Ohsul.dto.*;
 import com.Ohsul.Ohsul.service.OhSulService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -19,7 +21,8 @@ public class SearchAlcoholController {
     OhSulService ohSulService;
     
     @PostMapping("/searchAlcohol")
-    public ResponseEntity<?> searchAlcohol (@RequestBody BarSearchDTO request) {
-        return ohSulService.getBarScoreAndReviewInfo(request.getTelephone(), request.getBarName());
+    public ResponseEntity<List<BarListDTO>> searchAlcohol (@RequestBody List<BarSearchDTO> requests) {
+        List<BarListDTO> bars = ohSulService.getBarScoreAndReviewInfo(requests);
+        return ResponseEntity.ok(bars);
     }
 }

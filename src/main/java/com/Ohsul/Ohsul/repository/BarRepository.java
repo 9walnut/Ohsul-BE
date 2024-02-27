@@ -13,4 +13,5 @@ public interface BarRepository extends JpaRepository<BarEntity, Integer> {
   List<BarEntity> findByRoadAddressLike(String curAddress);
   List<BarEntity> findAllByBarIdIn(List<Integer> ids);
   BarEntity findByTelephone(String telephone);
+  BarEntity findByBarName(String barName);
 }

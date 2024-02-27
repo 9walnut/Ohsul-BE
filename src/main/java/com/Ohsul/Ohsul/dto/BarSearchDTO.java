@@ -7,8 +7,8 @@ import java.util.*;
 @Getter
 @Setter
 public class BarSearchDTO {
-  private List<String> telephone = new ArrayList<>();
-  private List<String> barName = new ArrayList<>();
-  private List<String> roadAddress = new ArrayList<>();
+  private String telephone;
+  private String barName;
+  private String roadAddress;
 }
 
