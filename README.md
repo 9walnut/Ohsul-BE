@@ -117,7 +117,7 @@ $ java -jar ohsul-be-3.1.5-SNAPSHOT.jav
 
 | **시스템 구성** |
 | :----------: |
-| <img src='https://github.com/9walnut/Ohsul-BE/assets/100561986/c6ff50fe-2b0a-4207-9548-12951cf27f574' width="800" /> |
+| <img src='https://github.com/9walnut/Ohsul-BE/assets/100561986/301f3902-1e6f-4a09-9391-81e41a478243' width="800" /> |
 
 
 ## 🛠️ 기술 스택
