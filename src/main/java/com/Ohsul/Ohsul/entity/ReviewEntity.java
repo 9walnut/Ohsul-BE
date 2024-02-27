@@ -35,6 +35,7 @@ public class ReviewEntity {
     @Column(name = "reviewPw", length = 20)
     private String reviewPw;
 
+    @CreationTimestamp
     @Temporal(TemporalType.DATE)
     @Column(name = "date")
     private Date date;

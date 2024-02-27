@@ -56,7 +56,7 @@ public class ReviewController {
     // 리뷰 > 수정하기 (이미지 데이터까지 한 번에)
     @PatchMapping("/{barId}/review/{reviewId}")
     public ResponseEntity<?> editReview(@PathVariable Integer barId, @PathVariable Integer reviewId,
-                                        @RequestPart MultipartFile reviewImg,
+                                        @RequestParam(required = false) MultipartFile reviewImg,
                                         @RequestPart BarReviewDTO barReviewDTO,
                                         @AuthenticationPrincipal String userId) {
         try {
