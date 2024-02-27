@@ -31,8 +31,7 @@ public class ReviewController {
                                           @RequestPart BarReviewDTO barReviewDTO,
                                           @AuthenticationPrincipal String userId) {
         try {
-            Boolean result = reviewService.createReview(barId, reviewImg, barReviewDTO, userId);
-            return ResponseEntity.ok(result);
+            return ResponseEntity.ok(reviewService.createReview(barId, reviewImg, barReviewDTO, userId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
