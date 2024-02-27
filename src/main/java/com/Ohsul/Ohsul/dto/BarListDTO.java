@@ -14,4 +14,7 @@ public class BarListDTO {
   private List<Integer> alcoholTags;
   private List<Integer> musicTags;
   private List<Integer> moodTags;
+
+  private Double barAvgScore;
+  private List<BarRecentReviewDTO> barRecentReviews;
 }

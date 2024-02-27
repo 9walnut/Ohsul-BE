@@ -1,49 +1,56 @@
 package com.Ohsul.Ohsul.service;
 
-import com.Ohsul.Ohsul.dto.BarAvgDTO;
-import com.Ohsul.Ohsul.dto.BarListDTO;
-import com.Ohsul.Ohsul.dto.BarRecentReviewDTO;
-import com.Ohsul.Ohsul.entity.BarEntity;
+import com.Ohsul.Ohsul.dto.*;
+import com.Ohsul.Ohsul.entity.*;
 import com.Ohsul.Ohsul.repository.BarRepository;
 import com.Ohsul.Ohsul.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class OhSulService {
     @Autowired
-    BarRepository barRepository;
-
+     BarRepository barRepository;
     @Autowired
     ReviewRepository reviewRepository;
 
-    public ResponseEntity<?> getBarScoreAndReviewInfo(List<String> telephones, List<String> barNames) {
-        List<BarEntity> bars = barRepository.findAllByTelephoneIn(telephones);
+    public OhSulService(BarRepository barRepository, ReviewRepository reviewRepository) {
 
-        if (bars.isEmpty() && !barNames.isEmpty()) {
-            bars = barRepository.findByBarNameIn(barNames);
+        this.barRepository = barRepository;
+        this.reviewRepository = reviewRepository;
+    }
+
+
+    public List<BarListDTO> getBarScoreAndReviewInfo(List<BarSearchDTO> requests) {
+        Set<BarEntity> barSet = new HashSet<>();
+        for (BarSearchDTO request : requests) {
+            BarEntity bar = null;
+
+            if (request.getTelephone() != null && !request.getTelephone().isBlank()) {
+                bar = barRepository.findByTelephone(request.getTelephone());
+            }
+
+            if (bar == null && request.getBarName() != null && !request.getBarName().isBlank()) {
+                bar = barRepository.findByBarName(request.getBarName());
+            }
+
+            if (bar == null) {
+                bar = new BarEntity();
+                bar.setTelephone(request.getTelephone());
+                bar.setBarName(request.getBarName());
+                bar.setRoadAddress(request.getRoadAddress());
+                barRepository.save(bar);
+            }
+
+            barSet.add(bar);
         }
-
-        List<BarListDTO> barListDTOS = bars.stream().map(this::convertEntityToDto).collect(Collectors.toList());
-
-        List<Integer> barIds = bars.stream().map(BarEntity::getBarId).collect(Collectors.toList()); // 검색된 바id
-
-        List<BarAvgDTO> barAvgScores = reviewRepository.findBarAvgScore(barIds); // 특정 바에 대한 평균 점수
-        List<BarRecentReviewDTO> barReview = reviewRepository.findReview(barIds); // 특정 바의 최근 리뷰 내용과 리뷰 이미지
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("barInfo", barListDTOS);
-        response.put("barAvgScore", barAvgScores);
-        response.put("barReview", barReview);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return barSet.stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
     private BarListDTO convertEntityToDto(BarEntity barentity) {
@@ -62,7 +69,26 @@ public class OhSulService {
                 .map(barMoodEntity -> barMoodEntity.getMood().getMoodId())
                 .collect(Collectors.toList()));
 
+        // 직접 쿼리 대신 평균 점수 계산
+        List<ReviewEntity> reviews = reviewRepository.findAllByBar_BarId(barentity.getBarId());
+        double avgScore = reviews.stream()
+                .mapToDouble(ReviewEntity::getScore)
+                .average()
+                .orElse(Double.NaN); // 리뷰가 없는 경우 처리
+        barListDTO.setBarAvgScore(avgScore);
+
+        // 최근 리뷰 조회를 위해 수정된 부분
+        Page<ReviewEntity> reviewPage = reviewRepository.findAllByBar_BarIdOrderByDateDesc(barentity.getBarId(), PageRequest.of(0, 1));
+        if (!reviewPage.isEmpty()) {
+            ReviewEntity latestReview = reviewPage.getContent().get(0);
+            BarRecentReviewDTO barReviewDTO = new BarRecentReviewDTO();
+            barReviewDTO.setBarImg(latestReview.getReviewImg());
+            barReviewDTO.setContent(latestReview.getContent());
+            // 기타 필요한 필드 설정
+            barListDTO.setBarRecentReviews(Collections.singletonList(barReviewDTO));
+            barListDTO.setBarImg(latestReview.getReviewImg());
+        }
+
         return barListDTO;
     }
-
 }
