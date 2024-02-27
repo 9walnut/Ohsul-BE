@@ -20,6 +20,6 @@ public class SearchAlcoholController {
     
     @PostMapping("/searchAlcohol")
     public ResponseEntity<?> searchAlcohol (@RequestBody BarSearchDTO request) {
-        return ohSulService.getBarScoreAndReviewInfo(request.getTelephones(), request.getBarNames());
+        return ohSulService.getBarScoreAndReviewInfo(request.getTelephone(), request.getBarName());
     }
 }
