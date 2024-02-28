@@ -152,12 +152,6 @@ public class ReviewService {
                 .build();
     }
 
-    // 리뷰 등록(사진)
-//    public String createReviewImg(MultipartFile reviewImg) {
-//        // s3에 리뷰 이미지 저장
-//        return s3Service.uploadReviewImg(reviewImg);
-//    }
-
     // 리뷰 수정 (비회원) 인증 (비번 일치 여부 확인)
     public Boolean userCheck(Integer reviewId, BarReviewDTO barReviewDTO) {
         ReviewEntity review = reviewRepository.findById(reviewId)
@@ -187,13 +181,6 @@ public class ReviewService {
             // 수정 리뷰 이미지 s3 등록
             newReviewImgUrl = s3Service.uploadReviewImg(reviewImg);
         }
-
-        // 업데이트를 위한 setter 사용
-//        review.setContent(barReviewDTO.getContent());
-//        review.setScore(barReviewDTO.getScore());
-//        review.setReviewImg(newReviewImgUrl);
-//
-//        review = reviewRepository.save(review);
 
         if (userSearch.isPresent()) {
             UserEntity user = userSearch.get();

@@ -18,6 +18,9 @@ public class OhSulService {
     ReviewRepository reviewRepository;
 
     @Autowired
+    FindBarByRequestList findBarByRequestList;
+
+    @Autowired
     BarEntityToDTOConverter barEntityToDTOConverter;
 
     public OhSulService(BarRepository barRepository, ReviewRepository reviewRepository) {
@@ -28,32 +31,6 @@ public class OhSulService {
 
 
     public List<BarListDTO> getBarScoreAndReviewInfo(List<BarSearchDTO> requests) {
-        Set<BarEntity> barSet = new HashSet<>();
-        for (BarSearchDTO request : requests) {
-            BarEntity bar = null;
-
-            if (request.getTelephone() != null && !request.getTelephone().isBlank()) {
-                bar = barRepository.findByTelephone(request.getTelephone());
-            }
-
-            if (bar == null && request.getBarName() != null && !request.getBarName().isBlank()) {
-                bar = barRepository.findByBarName(request.getBarName());
-            }
-
-            if (bar == null) {
-                bar = new BarEntity();
-                bar.setTelephone(request.getTelephone());
-                bar.setBarName(request.getBarName());
-                bar.setRoadAddress(request.getRoadAddress());
-                barRepository.save(bar);
-            }
-
-            barSet.add(bar);
-        }
-        return barSet.stream().map(this::convertEntityToDto).collect(Collectors.toList());
-    }
-
-    private BarListDTO convertEntityToDto(BarEntity barentity) {
-        return barEntityToDTOConverter.convertEntityToDto(barentity);
+        return findBarByRequestList.findBarsByRequestList(requests);
     }
 }
