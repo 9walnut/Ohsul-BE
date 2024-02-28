@@ -16,8 +16,8 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Integer> {
     List<ReviewEntity> findByUser_UserId(String userId);
 
     // 평균 4점이 넘는 바id 반환
-    @Query(nativeQuery = true, value = "SELECT bar_id FROM review GROUP BY bar_id HAVING AVG(score) >= 4")
-    List<Integer> findBarAByAvgScore();
+    @Query(nativeQuery = true, value = "SELECT bar_id, AVG(score) FROM review GROUP BY bar_id HAVING AVG(score) >= 4")
+    List<Integer> findBarIdByAvgScore();
 
     // 최신 리뷰 조회
     Page<ReviewEntity> findAllByBar_BarIdOrderByDateDesc(Integer barId, Pageable pageable);
