@@ -129,6 +129,7 @@ public class MyPageService {
       reviewDTO.setContent(review.getContent());
       reviewDTO.setReviewImg(review.getReviewImg());
       reviewDTO.setDate(review.getDate());
+      reviewDTO.setScore(review.getScore());
 
       BarEntity bar = review.getBar();
 
