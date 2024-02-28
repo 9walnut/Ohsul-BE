@@ -30,8 +30,8 @@ public class BarInfoService {
     @Autowired
     BarMoodRepository barMoodRepository;
 
-    public BarDTO getBarInfo(String telephone) {
-        BarEntity barInfo = barRepository.findByTelephone(telephone);
+    public BarDTO getBarInfo(Integer barId) {
+        BarEntity barInfo = barRepository.findById(barId).orElseThrow(() -> new RuntimeException("바 정보 없음"));
 
         List<BarAlcoholEntity> barAlcoholEntityList = barAlcoholRepository.findAllByBar_BarId(barInfo.getBarId());
         List<BarMusicEntity> barMusicEntityList = barMusicRepository.findAllByBar_BarId(barInfo.getBarId());
