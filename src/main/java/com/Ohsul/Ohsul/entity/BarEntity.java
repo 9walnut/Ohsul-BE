@@ -30,13 +30,13 @@ public class BarEntity {
   @Column(name = "barImg")
   private String barImg;
 
-  @Column(name = "snack")
+  @Column(name = "snack", columnDefinition = "TINYINT(1)")
   private Boolean snack;
 
-  @Column(name = "toilet")
+  @Column(name = "toilet", columnDefinition = "TINYINT(1)")
   private Boolean toilet;
 
-  @Column(name = "parkingArea")
+  @Column(name = "parkingArea", columnDefinition = "TINYINT(1)")
   private Boolean parkingArea;
 
   @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL)
