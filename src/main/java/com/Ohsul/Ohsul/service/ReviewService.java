@@ -174,6 +174,9 @@ public class ReviewService {
         ReviewEntity review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("리뷰 정보 없음"));
 
+        // 회원 여부 확인
+        Optional<UserEntity> userSearch = userRepository.findByUserId(userId);
+
         String reviewImgUrl = null;
         String newReviewImgUrl = null;
 
@@ -186,10 +189,34 @@ public class ReviewService {
         }
 
         // 업데이트를 위한 setter 사용
-        review.setContent(barReviewDTO.getContent());
-        review.setScore(barReviewDTO.getScore());
-        review.setReviewImg(newReviewImgUrl);
+//        review.setContent(barReviewDTO.getContent());
+//        review.setScore(barReviewDTO.getScore());
+//        review.setReviewImg(newReviewImgUrl);
+//
+//        review = reviewRepository.save(review);
 
+        if (userSearch.isPresent()) {
+            UserEntity user = userSearch.get();
+
+            review = ReviewEntity.builder()
+                    .content(barReviewDTO.getContent())
+                    .score(barReviewDTO.getScore())
+                    .reviewImg(newReviewImgUrl)
+                    .nickname(review.getNickname())
+                    .user(user)
+                    .bar(bar)
+                    .build();
+        } else {
+            // 비회원 리뷰 저장
+            review = ReviewEntity.builder()
+                    .content(barReviewDTO.getContent())
+                    .score(barReviewDTO.getScore())
+                    .reviewImg(newReviewImgUrl)
+                    .nickname(review.getNickname())
+                    .reviewPw(review.getReviewPw())
+                    .bar(bar)
+                    .build();
+        }
         review = reviewRepository.save(review);
 
         // 새 태그 생성
@@ -218,6 +245,17 @@ public class ReviewService {
             barMoodRepository.save(barMood);
         }
         deleteAssociateTags(reviewId);
+
+        BarReviewDTO.builder()
+                .content(review.getContent())
+                .score(review.getScore())
+                .reviewImg(review.getReviewImg())
+                .nickname(review.getNickname())
+                .alcoholTags(alcoholTags)
+                .musicTags(musicTags)
+                .moodTags(moodTags)
+                .build();
+
         return true;
     }
 
