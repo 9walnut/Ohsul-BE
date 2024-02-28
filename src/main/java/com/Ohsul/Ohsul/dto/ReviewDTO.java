@@ -13,6 +13,7 @@ public class ReviewDTO {
   private String content;
   private String reviewImg;
   private Date date;
+  private Integer score;
 
   private List<Integer> alcoholTags;
   private List<Integer> musicTags;
