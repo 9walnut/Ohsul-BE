@@ -125,6 +125,7 @@ public class MyPageService {
     List<ReviewDTO> reviewDTOs = reviews.stream().map(review -> {
       ReviewDTO reviewDTO = new ReviewDTO();
       reviewDTO.setBarId(review.getBar().getBarId());
+      reviewDTO.setBarName(review.getBar().getBarName());
       reviewDTO.setReviewId(review.getReviewId());
       reviewDTO.setContent(review.getContent());
       reviewDTO.setReviewImg(review.getReviewImg());

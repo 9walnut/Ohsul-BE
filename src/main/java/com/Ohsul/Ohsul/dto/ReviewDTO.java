@@ -10,6 +10,7 @@ import java.util.List;
 public class ReviewDTO {
   private Integer barId;
   private Integer reviewId;
+  private String barName;
   private String content;
   private String reviewImg;
   private Date date;
