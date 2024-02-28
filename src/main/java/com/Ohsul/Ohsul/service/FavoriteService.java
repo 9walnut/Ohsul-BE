@@ -1,7 +1,6 @@
 package com.Ohsul.Ohsul.service;
 
 import com.Ohsul.Ohsul.dto.FavoriteRegisterDTO;
-import com.Ohsul.Ohsul.dto.UserFavoriteListDTO;
 import com.Ohsul.Ohsul.entity.BarEntity;
 import com.Ohsul.Ohsul.entity.FavoriteEntity;
 import com.Ohsul.Ohsul.entity.FavoriteKey;

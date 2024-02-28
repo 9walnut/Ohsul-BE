@@ -1,12 +1,10 @@
 package com.Ohsul.Ohsul.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 
 @Entity
 @Getter

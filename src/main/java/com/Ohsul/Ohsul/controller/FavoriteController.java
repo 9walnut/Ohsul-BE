@@ -1,8 +1,6 @@
 package com.Ohsul.Ohsul.controller;
 
-import com.Ohsul.Ohsul.dto.FavoriteDTO;
 import com.Ohsul.Ohsul.dto.FavoriteRegisterDTO;
-import com.Ohsul.Ohsul.dto.UserFavoriteListDTO;
 import com.Ohsul.Ohsul.service.FavoriteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,5 @@
 package com.Ohsul.Ohsul.repository;
 
-import com.Ohsul.Ohsul.domain.*;
 import com.Ohsul.Ohsul.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

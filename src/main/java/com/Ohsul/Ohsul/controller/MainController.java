@@ -1,6 +1,5 @@
 package com.Ohsul.Ohsul.controller;
 
-import com.Ohsul.Ohsul.dto.BarListDTO;
 import com.Ohsul.Ohsul.service.MainAlcoholService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

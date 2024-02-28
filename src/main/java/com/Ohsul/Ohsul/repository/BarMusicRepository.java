@@ -1,6 +1,5 @@
 package com.Ohsul.Ohsul.repository;
 
-import com.Ohsul.Ohsul.entity.BarAlcoholEntity;
 import com.Ohsul.Ohsul.entity.BarMusicEntity;
 import com.Ohsul.Ohsul.entity.BarMusicKey;
 import org.springframework.data.jpa.repository.JpaRepository;

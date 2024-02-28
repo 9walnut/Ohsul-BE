@@ -1,7 +1,5 @@
 package com.Ohsul.Ohsul.entity;
 
-import com.Ohsul.Ohsul.domain.Bar;
-import com.Ohsul.Ohsul.domain.Music;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

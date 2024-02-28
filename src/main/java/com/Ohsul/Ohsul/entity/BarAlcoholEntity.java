@@ -1,7 +1,5 @@
 package com.Ohsul.Ohsul.entity;
 
-import com.Ohsul.Ohsul.domain.Alcohol;
-import com.Ohsul.Ohsul.domain.Bar;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -2,21 +2,17 @@ package com.Ohsul.Ohsul.config;
 
 
 import com.Ohsul.Ohsul.security.*;
-import com.Ohsul.Ohsul.service.*;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
-import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.*;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configurers.*;
 import org.springframework.security.config.http.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.*;
 import org.springframework.security.web.authentication.*;
 import org.springframework.web.cors.*;
