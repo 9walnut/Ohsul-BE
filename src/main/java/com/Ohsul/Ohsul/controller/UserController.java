@@ -48,7 +48,11 @@ public class UserController {
       // 즐겨찾기 목록 조회
       List<FavoriteEntity> favorites = favoriteRepository.findByUser_UserId(user.getUserId());
       List<FavoriteDTO> favoriteDTOs = favorites.stream()
-              .map(favorite -> new FavoriteDTO())
+              .map(favorite -> {
+                FavoriteDTO favoriteDTO = new FavoriteDTO();
+                favoriteDTO.setBar(favorite.getBar());
+                return favoriteDTO;
+              })
               .collect(Collectors.toList());
 
       UserDTO responseUserDTO = UserDTO.builder()
