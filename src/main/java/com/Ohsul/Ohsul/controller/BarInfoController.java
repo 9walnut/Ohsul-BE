@@ -15,10 +15,10 @@ public class BarInfoController {
     @Autowired
     BarInfoService barInfoService;
 
-    @GetMapping("/bar/{barPhone}")
-    public ResponseEntity<?> getBarInfo (@PathVariable String barPhone) {
+    @GetMapping("/bar/{barId}")
+    public ResponseEntity<?> getBarInfo (@PathVariable Integer barId) {
         try {
-            return ResponseEntity.ok().body(barInfoService.getBarInfo(barPhone));
+            return ResponseEntity.ok().body(barInfoService.getBarInfo(barId));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
