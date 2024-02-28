@@ -54,7 +54,7 @@ public class SecurityConfig  {
             )
             .authorizeHttpRequests(authorize -> authorize
                     .dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                    .requestMatchers("/api/ohsul/**", "/api/register/**", "/api/login/**","/api/main/**").permitAll()
+                    .requestMatchers("/api/ohsul/**", "/api/register/**", "/api/login/**","/api/main/**", "/api/near/**", "/api/favorite/**").permitAll()
                     .anyRequest().authenticated()
             );
     http.addFilterAfter(customAuthFilter, UsernamePasswordAuthenticationFilter.class);
