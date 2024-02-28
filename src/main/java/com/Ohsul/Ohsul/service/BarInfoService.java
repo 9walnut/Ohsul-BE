@@ -1,7 +1,6 @@
 package com.Ohsul.Ohsul.service;
 
 import com.Ohsul.Ohsul.dto.BarDTO;
-import com.Ohsul.Ohsul.dto.BarReviewDTO;
 import com.Ohsul.Ohsul.entity.*;
 import com.Ohsul.Ohsul.repository.BarAlcoholRepository;
 import com.Ohsul.Ohsul.repository.BarMoodRepository;

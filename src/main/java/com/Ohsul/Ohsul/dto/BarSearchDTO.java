@@ -2,7 +2,6 @@ package com.Ohsul.Ohsul.dto;
 
 import lombok.*;
 
-import java.util.*;
 
 @Getter
 @Setter

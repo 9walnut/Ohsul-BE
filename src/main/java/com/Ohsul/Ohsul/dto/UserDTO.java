@@ -1,6 +1,5 @@
 package com.Ohsul.Ohsul.dto;
 
-import com.Ohsul.Ohsul.entity.*;
 import lombok.*;
 
 import java.util.*;

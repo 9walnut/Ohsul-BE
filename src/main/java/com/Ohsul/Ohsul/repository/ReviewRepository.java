@@ -1,9 +1,6 @@
 package com.Ohsul.Ohsul.repository;
 
-import com.Ohsul.Ohsul.dto.BarAvgDTO;
-import com.Ohsul.Ohsul.dto.BarRecentReviewDTO;
 import com.Ohsul.Ohsul.entity.*;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
