@@ -71,6 +71,8 @@ public class ReviewService {
                     .content(i.getContent())
                     .score(i.getScore())
                     .reviewImg(i.getReviewImg())
+                    .nickname(i.getNickname())
+                    .date(i.getDate())
                     .alcoholTags(barAlcoholEntityList.stream().map(BarAlcoholEntity::getAlcohol).map(AlcoholEntity::getAlcoholId).collect(Collectors.toList()))
                     .musicTags(barMusicEntityList.stream().map(BarMusicEntity::getMusic).map(MusicEntity::getMusicId).collect(Collectors.toList()))
                     .moodTags(barMoodEntityList.stream().map(BarMoodEntity::getMood).map(MoodEntity::getMoodId).collect(Collectors.toList()))
