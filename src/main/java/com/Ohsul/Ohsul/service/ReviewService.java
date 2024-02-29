@@ -280,7 +280,7 @@ public class ReviewService {
         return true;
     }
 
-    // 리뷰 상세 조회
+    // 리뷰 상세 조회 (원래 리뷰 내용 반환)
     public BarReviewDTO getBarReview(Integer reviewId) {
         ReviewEntity barReview = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("리뷰 정보 없음"));

@@ -13,7 +13,7 @@ public class BarEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer barId;
 
-  @Column(name = "barName", nullable = false, length = 20)
+  @Column(name = "barName", nullable = false, length = 50)
   private String barName;
 
   @Column(name = "roadAddress", nullable = false)
