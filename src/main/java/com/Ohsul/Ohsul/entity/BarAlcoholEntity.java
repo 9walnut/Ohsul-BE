@@ -25,7 +25,8 @@ public class BarAlcoholEntity {
     @JoinColumn(name = "alcoholId")
     private AlcoholEntity alcohol;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+//    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
     private ReviewEntity review;
 

@@ -182,28 +182,32 @@ public class ReviewService {
             newReviewImgUrl = s3Service.uploadReviewImg(reviewImg);
         }
 
-        if (userSearch.isPresent()) {
-            UserEntity user = userSearch.get();
+        review.setContent(barReviewDTO.getContent());
+        review.setScore(barReviewDTO.getScore());
+        review.setReviewImg(newReviewImgUrl);
 
-            review = ReviewEntity.builder()
-                    .content(barReviewDTO.getContent())
-                    .score(barReviewDTO.getScore())
-                    .reviewImg(newReviewImgUrl)
-                    .nickname(review.getNickname())
-                    .user(user)
-                    .bar(bar)
-                    .build();
-        } else {
-            // 비회원 리뷰 저장
-            review = ReviewEntity.builder()
-                    .content(barReviewDTO.getContent())
-                    .score(barReviewDTO.getScore())
-                    .reviewImg(newReviewImgUrl)
-                    .nickname(review.getNickname())
-                    .reviewPw(review.getReviewPw())
-                    .bar(bar)
-                    .build();
-        }
+//        if (userSearch.isPresent()) {
+//            UserEntity user = userSearch.get();
+//
+//            review = ReviewEntity.builder()
+//                    .content(barReviewDTO.getContent())
+//                    .score(barReviewDTO.getScore())
+//                    .reviewImg(newReviewImgUrl)
+//                    .nickname(review.getNickname())
+//                    .user(user)
+//                    .bar(bar)
+//                    .build();
+//        } else {
+//            // 비회원 리뷰 저장
+//            review = ReviewEntity.builder()
+//                    .content(barReviewDTO.getContent())
+//                    .score(barReviewDTO.getScore())
+//                    .reviewImg(newReviewImgUrl)
+//                    .nickname(review.getNickname())
+//                    .reviewPw(review.getReviewPw())
+//                    .bar(bar)
+//                    .build();
+//        }
         review = reviewRepository.save(review);
 
         // 새 태그 생성

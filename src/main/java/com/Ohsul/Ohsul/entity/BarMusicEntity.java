@@ -26,7 +26,8 @@ public class BarMusicEntity {
     private MusicEntity music;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+//    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "reviewId", referencedColumnName = "reviewId")
     private ReviewEntity review;
 
