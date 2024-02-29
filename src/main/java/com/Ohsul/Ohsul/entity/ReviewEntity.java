@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @DynamicUpdate
@@ -36,9 +37,8 @@ public class ReviewEntity {
     private String reviewPw;
 
     @CreationTimestamp
-    @Temporal(TemporalType.DATE)
     @Column(name = "date")
-    private Date date;
+    private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "barId")
