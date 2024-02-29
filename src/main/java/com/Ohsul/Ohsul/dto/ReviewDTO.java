@@ -2,6 +2,7 @@ package com.Ohsul.Ohsul.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class ReviewDTO {
   private String barName;
   private String content;
   private String reviewImg;
-  private Date date;
+  private LocalDateTime date;
   private Integer score;
 
   private List<Integer> alcoholTags;
