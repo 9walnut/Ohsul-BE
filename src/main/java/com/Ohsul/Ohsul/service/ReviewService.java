@@ -171,7 +171,7 @@ public class ReviewService {
         // 회원 여부 확인
         Optional<UserEntity> userSearch = userRepository.findByUserId(userId);
 
-        String reviewImgUrl = null;
+//        String reviewImgUrl = null;
         String newReviewImgUrl = null;
 
         if (reviewImg != null) {
@@ -180,6 +180,8 @@ public class ReviewService {
 
             // 수정 리뷰 이미지 s3 등록
             newReviewImgUrl = s3Service.uploadReviewImg(reviewImg);
+        } else {
+            newReviewImgUrl = review.getReviewImg();
         }
 
         review.setContent(barReviewDTO.getContent());
