@@ -115,7 +115,7 @@ $ java -jar ohsul-be-3.1.5-SNAPSHOT.jav
   
 | **개체-관계 모델(ERD)** |
 | :----------: |
-| <img src='https://github.com/9walnut/Ohsul-BE/assets/100561986/5e668294-a134-4ea7-9b07-88251098d3b2' width="800" /> |
+| <img src='https://github.com/9walnut/Ohsul-BE/assets/144768130/bf5bb063-f306-47e8-8531-4e5ce3888dc0' width="800" /> |
 
 
 | **시스템 구성** |
