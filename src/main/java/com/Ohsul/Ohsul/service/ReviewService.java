@@ -142,6 +142,8 @@ public class ReviewService {
             barMoodRepository.save(barMood);
         }
         return BarReviewDTO.builder()
+                .reviewId(review.getReviewId())
+                .date(review.getDate())
                 .content(review.getContent())
                 .score(review.getScore())
                 .reviewImg(review.getReviewImg())
@@ -171,7 +173,6 @@ public class ReviewService {
         // 회원 여부 확인
         Optional<UserEntity> userSearch = userRepository.findByUserId(userId);
 
-//        String reviewImgUrl = null;
         String newReviewImgUrl = null;
 
         if (reviewImg != null) {
@@ -183,34 +184,10 @@ public class ReviewService {
         } else {
             newReviewImgUrl = review.getReviewImg();
         }
+        review.updateReview(barReviewDTO, newReviewImgUrl);
+        reviewRepository.save(review);
 
-        review.setContent(barReviewDTO.getContent());
-        review.setScore(barReviewDTO.getScore());
-        review.setReviewImg(newReviewImgUrl);
-
-//        if (userSearch.isPresent()) {
-//            UserEntity user = userSearch.get();
-//
-//            review = ReviewEntity.builder()
-//                    .content(barReviewDTO.getContent())
-//                    .score(barReviewDTO.getScore())
-//                    .reviewImg(newReviewImgUrl)
-//                    .nickname(review.getNickname())
-//                    .user(user)
-//                    .bar(bar)
-//                    .build();
-//        } else {
-//            // 비회원 리뷰 저장
-//            review = ReviewEntity.builder()
-//                    .content(barReviewDTO.getContent())
-//                    .score(barReviewDTO.getScore())
-//                    .reviewImg(newReviewImgUrl)
-//                    .nickname(review.getNickname())
-//                    .reviewPw(review.getReviewPw())
-//                    .bar(bar)
-//                    .build();
-//        }
-        review = reviewRepository.save(review);
+        deleteAssociateTags(reviewId);
 
         // 새 태그 생성
         List<Integer> alcoholTags = barReviewDTO.getAlcoholTags();
@@ -237,7 +214,6 @@ public class ReviewService {
             BarMoodEntity barMood = new BarMoodEntity(bar, mood, review);
             barMoodRepository.save(barMood);
         }
-        deleteAssociateTags(reviewId);
 
         BarReviewDTO.builder()
                 .content(review.getContent())
