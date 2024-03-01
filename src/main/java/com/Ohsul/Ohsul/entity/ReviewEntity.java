@@ -1,5 +1,6 @@
 package com.Ohsul.Ohsul.entity;
 
+import com.Ohsul.Ohsul.dto.BarReviewDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -11,7 +12,6 @@ import java.time.LocalDateTime;
 @Entity
 @DynamicUpdate
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -47,5 +47,12 @@ public class ReviewEntity {
     @ManyToOne
     @JoinColumn(name = "userNumber")
     private UserEntity user;
+
+    public void updateReview(BarReviewDTO barReviewDTO, String reviewImgUrl) {
+        this.content = barReviewDTO.getContent();
+        this.score = barReviewDTO.getScore();
+        this.reviewImg = reviewImgUrl;
+        this.nickname = barReviewDTO.getNickname();
+    }
 
 }
