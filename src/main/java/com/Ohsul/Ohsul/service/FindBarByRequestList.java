@@ -41,7 +41,7 @@ public class FindBarByRequestList {
                 bar.setTelephone(request.getTelephone());
                 bar.setBarName(request.getBarName());
                 bar.setRoadAddress(request.getRoadAddress());
-                bar.setBarImg("/images/noimage.png");
+                bar.setBarImg("https://ohsul.s3.ap-northeast-2.amazonaws.com/reviewImg/noimage.png");
                 barRepository.save(bar);
             }
 
