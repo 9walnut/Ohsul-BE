@@ -50,13 +50,7 @@ public class BarEntityToDTOConverter {
       barReviewDTO.setContent(latestReview.getContent());
       barListDTO.setBarRecentReviews(Collections.singletonList(barReviewDTO));
       barListDTO.setBarImg(latestReview.getReviewImg());
-    } else {
-      BarRecentReviewDTO barReviewDTO = new BarRecentReviewDTO();
-      barReviewDTO.setBarImg("/images/noimage.png");
-      barReviewDTO.setContent("");
-      barListDTO.setBarRecentReviews(Collections.singletonList(barReviewDTO));
     }
-
     return barListDTO;
   }
 }
