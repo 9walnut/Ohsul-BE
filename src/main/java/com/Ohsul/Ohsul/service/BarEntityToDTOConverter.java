@@ -48,9 +48,14 @@ public class BarEntityToDTOConverter {
       BarRecentReviewDTO barReviewDTO = new BarRecentReviewDTO();
       barReviewDTO.setBarImg(latestReview.getReviewImg());
       barReviewDTO.setContent(latestReview.getContent());
-      // 기타 필요한 필드 설정
       barListDTO.setBarRecentReviews(Collections.singletonList(barReviewDTO));
       barListDTO.setBarImg(latestReview.getReviewImg());
+    }else {
+      BarRecentReviewDTO barReviewDTO = new BarRecentReviewDTO();
+      barReviewDTO.setBarImg("/images/noimage.png");
+      barReviewDTO.setContent("");
+      barListDTO.setBarRecentReviews(Collections.singletonList(barReviewDTO));
+      barListDTO.setBarImg("");
     }
 
     return barListDTO;
