@@ -39,18 +39,24 @@ public class BarEntityToDTOConverter {
     double avgScore = reviews.stream()
             .mapToDouble(ReviewEntity::getScore)
             .average()
-            .orElse(Double.NaN); // 리뷰가 없는 경우 처리
+            .orElse(0.0); // 리뷰가 없는 경우 처리
     barListDTO.setBarAvgScore(avgScore);
 
     Page<ReviewEntity> reviewPage = reviewRepository.findAllByBar_BarIdOrderByDateDesc(barentity.getBarId(), PageRequest.of(0, 1));
+    BarRecentReviewDTO barReviewDTO = new BarRecentReviewDTO();
+
     if (!reviewPage.isEmpty()) {
       ReviewEntity latestReview = reviewPage.getContent().get(0);
-      BarRecentReviewDTO barReviewDTO = new BarRecentReviewDTO();
       barReviewDTO.setBarImg(latestReview.getReviewImg());
       barReviewDTO.setContent(latestReview.getContent());
-      barListDTO.setBarRecentReviews(Collections.singletonList(barReviewDTO));
-      barListDTO.setBarImg(latestReview.getReviewImg());
+    } else {
+      barReviewDTO.setBarImg("https://ohsul.s3.ap-northeast-2.amazonaws.com/reviewImg/noimage.png");
+      barReviewDTO.setContent("");
     }
+
+// DTO 설정
+    barListDTO.setBarRecentReviews(Collections.singletonList(barReviewDTO));
+    barListDTO.setBarImg(barReviewDTO.getBarImg());
 
     return barListDTO;
   }
