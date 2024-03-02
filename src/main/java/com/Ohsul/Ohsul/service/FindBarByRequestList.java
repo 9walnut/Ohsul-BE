@@ -41,6 +41,7 @@ public class FindBarByRequestList {
                 bar.setTelephone(request.getTelephone());
                 bar.setBarName(request.getBarName());
                 bar.setRoadAddress(request.getRoadAddress());
+                bar.setBarImg("/static/images/noimage.png");
                 barRepository.save(bar);
             }
 
