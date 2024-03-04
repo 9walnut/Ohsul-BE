@@ -28,12 +28,6 @@ public class UserController {
   @Autowired
   BCryptPasswordEncoder passwordEncoder;
 
-  // 로그인 페이지
-  @GetMapping("/login")
-  public String getLogin(){
-    return "GET /login";
-  }
-
   // 로그인 요청
   @PostMapping("/login")
   public ResponseEntity<?> loginUser(HttpSession session, HttpServletResponse response ,@RequestBody UserDTO userDTO) {
@@ -76,12 +70,6 @@ public class UserController {
     } catch (Exception e){
       return ResponseEntity.badRequest().body(e.getMessage());
     }
-  }
-
-  // 회원가입 페이지
-  @GetMapping("/register")
-  public String getRegister(){
-    return "/register";
   }
 
   // 회원가입 요청

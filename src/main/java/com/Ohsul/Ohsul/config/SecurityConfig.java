@@ -38,7 +38,7 @@ public class SecurityConfig  {
             .logout(auth -> auth
                     .logoutUrl("/api/logout")
                     .logoutSuccessHandler(((request, response, authentication) -> {
-                      // 쿠키 삭제 로직
+                      // 쿠키 삭제
                       Cookie cookie = new Cookie("userLoggedIn", null);
                       cookie.setPath("/");
                       cookie.setHttpOnly(true);
