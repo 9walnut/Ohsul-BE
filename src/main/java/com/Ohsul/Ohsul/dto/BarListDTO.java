@@ -1,5 +1,6 @@
 package com.Ohsul.Ohsul.dto;
 
+import com.Ohsul.Ohsul.entity.BarEtcEntity;
 import lombok.*;
 
 import java.util.*;
@@ -10,6 +11,8 @@ public class BarListDTO {
   private Integer barId;
   private String barName;
   private String barImg;
+
+  private Map<String, Boolean> etcTags;
 
   private List<Integer> alcoholTags;
   private List<Integer> musicTags;

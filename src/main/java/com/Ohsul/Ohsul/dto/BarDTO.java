@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Builder
@@ -14,9 +15,8 @@ public class BarDTO {
     private String telephone;
 
     private String description;
-    private Boolean snack;
-    private Boolean toilet;
-    private Boolean parkingArea;
+
+    private Map<String, Boolean> etcTags;
 
     private List<Integer> alcoholTags;
     private List<Integer> musicTags;

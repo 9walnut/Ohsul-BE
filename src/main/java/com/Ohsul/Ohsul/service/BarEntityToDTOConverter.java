@@ -25,6 +25,13 @@ public class BarEntityToDTOConverter {
     barListDTO.setBarName(barentity.getBarName());
     barListDTO.setBarImg(barentity.getBarImg());
 
+    BarEtcEntity barEtc = barentity.getBarEtc();
+    Map<String, Boolean> etcTags = new HashMap<>();
+    etcTags.put("toilet", barEtc.getToilet());
+    etcTags.put("parkingArea", barEtc.getParkingArea());
+    etcTags.put("snack", barEtc.getSnack());
+    barListDTO.setEtcTags(etcTags);
+
     barListDTO.setAlcoholTags(barentity.getBarAlcohols().stream()
             .map(barAlcoholEntity -> barAlcoholEntity.getAlcohol().getAlcoholId())
             .collect(Collectors.toList()));
