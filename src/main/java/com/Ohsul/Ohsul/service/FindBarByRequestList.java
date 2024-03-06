@@ -3,6 +3,7 @@ package com.Ohsul.Ohsul.service;
 import com.Ohsul.Ohsul.dto.BarListDTO;
 import com.Ohsul.Ohsul.dto.BarSearchDTO;
 import com.Ohsul.Ohsul.entity.BarEntity;
+import com.Ohsul.Ohsul.entity.BarEtcEntity;
 import com.Ohsul.Ohsul.repository.BarRepository;
 import com.Ohsul.Ohsul.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,15 @@ public class FindBarByRequestList {
                 bar.setBarName(request.getBarName());
                 bar.setRoadAddress(request.getRoadAddress());
                 bar.setBarImg("https://ohsul.s3.ap-northeast-2.amazonaws.com/reviewImg/noimage.png");
+
+                BarEtcEntity barEtc = new BarEtcEntity();
+                barEtc.setToilet(null);
+                barEtc.setParkingArea(null);
+                barEtc.setSnack(null);
+
+                bar.setBarEtc(barEtc);
+                barEtc.setBar(bar);
+
                 barRepository.save(bar);
             }
 

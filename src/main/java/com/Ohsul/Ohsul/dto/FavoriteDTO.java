@@ -19,9 +19,6 @@ public class FavoriteDTO {
   private String telephone;
 
   private String description;
-  private Boolean snack;
-  private Boolean toilet;
-  private Boolean parkingArea;
   private Double AvgScore;
 
   private Map<String, Boolean> etcTags;

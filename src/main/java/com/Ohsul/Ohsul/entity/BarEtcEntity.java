@@ -1,13 +1,11 @@
 package com.Ohsul.Ohsul.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,10 +14,6 @@ public class BarEtcEntity {
 
     @Id
     private Integer barId;
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Integer etcId;
 
     @Column(name = "toilet", columnDefinition = "TINYINT(1)")
     private Boolean toilet;
