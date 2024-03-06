@@ -11,9 +11,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "music")
 public class MusicEntity {
     @Id

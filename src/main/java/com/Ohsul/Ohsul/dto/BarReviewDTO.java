@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Builder
@@ -20,6 +21,8 @@ public class BarReviewDTO {
     private String nickname;
     private String reviewPw;
     private LocalDateTime date;
+
+//    private Map<String, Boolean> etcTags;
 
     private List<Integer> alcoholTags;
     private List<Integer> musicTags;

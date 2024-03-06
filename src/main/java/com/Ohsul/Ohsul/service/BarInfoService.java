@@ -10,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,9 +44,11 @@ public class BarInfoService {
                 .barImg(barInfo.getBarImg())
                 .telephone(barInfo.getTelephone())
                 .description(barInfo.getDescription())
-                .snack(barInfo.getSnack())
-                .toilet(barInfo.getToilet())
-                .parkingArea(barInfo.getParkingArea())
+                .etcTags(new HashMap<String, Boolean>() {{
+                    put("toilet", barInfo.getBarEtc().getToilet());
+                    put("parkingArea", barInfo.getBarEtc().getParkingArea());
+                    put("snack", barInfo.getBarEtc().getSnack());
+                }})
                 .alcoholTags(barAlcoholEntityList.stream().map(BarAlcoholEntity::getAlcohol)
                         .map(AlcoholEntity::getAlcoholId).collect(Collectors.toList()))
                 .musicTags(barMusicEntityList.stream().map(BarMusicEntity::getMusic)

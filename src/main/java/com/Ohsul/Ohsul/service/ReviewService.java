@@ -214,24 +214,7 @@ public class ReviewService {
             BarMoodEntity barMood = new BarMoodEntity(bar, mood, review);
             barMoodRepository.save(barMood);
         }
-
-        BarReviewDTO.builder()
-                .content(review.getContent())
-                .score(review.getScore())
-                .reviewImg(review.getReviewImg())
-                .nickname(review.getNickname())
-                .alcoholTags(alcoholTags)
-                .musicTags(musicTags)
-                .moodTags(moodTags)
-                .build();
-
         return true;
-    }
-
-    public void deleteAssociateTags(Integer reviewId) {
-        barAlcoholRepository.deleteByReview_reviewId(reviewId);
-        barMusicRepository.deleteByReview_reviewId(reviewId);
-        barMoodRepository.deleteByReview_reviewId(reviewId);
     }
 
     // 리뷰 삭제
@@ -240,18 +223,9 @@ public class ReviewService {
         ReviewEntity review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("리뷰 정보 없음"));
 
-        List<BarAlcoholEntity> barAlcoholEntityList = barAlcoholRepository.findAllByReview_reviewId(reviewId);
-        List<BarMusicEntity>  barMusicEntityList = barMusicRepository.findAllByReview_reviewId(reviewId);
-        List<BarMoodEntity> barMoodEntityList = barMoodRepository.findAllByReview_reviewId(reviewId);
-
-        barAlcoholRepository.deleteAll(barAlcoholEntityList);
-        barMusicRepository.deleteAll(barMusicEntityList);
-        barMoodRepository.deleteAll(barMoodEntityList);
-
+        deleteAssociateTags(reviewId);
         s3Service.deleteReviewImg(review.getReviewImg());
         reviewRepository.deleteById(reviewId);
-
-        entityManager.flush();
 
         return true;
     }
@@ -278,5 +252,11 @@ public class ReviewService {
                 .moodTags(barMoodEntityList.stream().map(BarMoodEntity::getMood)
                         .map(MoodEntity::getMoodId).collect(Collectors.toList()))
                 .build();
+    }
+
+    public void deleteAssociateTags(Integer reviewId) {
+        barAlcoholRepository.deleteByReview_reviewId(reviewId);
+        barMusicRepository.deleteByReview_reviewId(reviewId);
+        barMoodRepository.deleteByReview_reviewId(reviewId);
     }
 }

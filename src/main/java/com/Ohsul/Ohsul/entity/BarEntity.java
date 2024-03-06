@@ -30,14 +30,8 @@ public class BarEntity {
   @Column(name = "barImg")
   private String barImg;
 
-  @Column(name = "snack", columnDefinition = "TINYINT(1)")
-  private Boolean snack;
-
-  @Column(name = "toilet", columnDefinition = "TINYINT(1)")
-  private Boolean toilet;
-
-  @Column(name = "parkingArea", columnDefinition = "TINYINT(1)")
-  private Boolean parkingArea;
+  @OneToOne(mappedBy = "bar", cascade = CascadeType.ALL)
+  private BarEtcEntity barEtc;
 
   @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL)
   private List<ReviewEntity> reviews = new ArrayList<>();
