@@ -12,7 +12,7 @@ public class BarListDTO {
   private String barName;
   private String barImg;
 
-  private Map<String, Boolean> etcTags;
+  private Map<String, Integer> etcTags;
 
   private List<Integer> alcoholTags;
   private List<Integer> musicTags;

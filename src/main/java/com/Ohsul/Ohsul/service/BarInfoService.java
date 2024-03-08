@@ -44,10 +44,10 @@ public class BarInfoService {
                 .barImg(barInfo.getBarImg())
                 .telephone(barInfo.getTelephone())
                 .description(barInfo.getDescription())
-                .etcTags(new HashMap<String, Boolean>() {{
-                    put("toilet", barInfo.getBarEtc().getToilet());
-                    put("parkingArea", barInfo.getBarEtc().getParkingArea());
-                    put("snack", barInfo.getBarEtc().getSnack());
+                .etcTags(new HashMap<String, Integer>() {{
+                    put("toilet", barInfo.getBarEtc().getToilet() ? 1:0);
+                    put("parkingArea", barInfo.getBarEtc().getParkingArea() ? 1:0);
+                    put("snack", barInfo.getBarEtc().getSnack() ? 1:0);
                 }})
                 .alcoholTags(barAlcoholEntityList.stream().map(BarAlcoholEntity::getAlcohol)
                         .map(AlcoholEntity::getAlcoholId).collect(Collectors.toList()))

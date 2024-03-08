@@ -16,7 +16,7 @@ public class BarDTO {
 
     private String description;
 
-    private Map<String, Boolean> etcTags;
+    private Map<String, Integer> etcTags;
 
     private List<Integer> alcoholTags;
     private List<Integer> musicTags;
