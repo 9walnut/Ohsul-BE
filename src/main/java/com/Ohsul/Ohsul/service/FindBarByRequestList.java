@@ -45,9 +45,9 @@ public class FindBarByRequestList {
                 bar.setBarImg("https://ohsul.s3.ap-northeast-2.amazonaws.com/reviewImg/noimage.png");
 
                 BarEtcEntity barEtc = new BarEtcEntity();
-                barEtc.setToilet(null);
-                barEtc.setParkingArea(null);
-                barEtc.setSnack(null);
+                barEtc.setToilet(false);
+                barEtc.setParkingArea(false);
+                barEtc.setSnack(false);
 
                 bar.setBarEtc(barEtc);
                 barEtc.setBar(bar);

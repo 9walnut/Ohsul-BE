@@ -26,10 +26,10 @@ public class BarEntityToDTOConverter {
     barListDTO.setBarImg(barentity.getBarImg());
 
     BarEtcEntity barEtc = barentity.getBarEtc();
-    Map<String, Boolean> etcTags = new HashMap<>();
-    etcTags.put("toilet", barEtc.getToilet());
-    etcTags.put("parkingArea", barEtc.getParkingArea());
-    etcTags.put("snack", barEtc.getSnack());
+    Map<String, Integer> etcTags = new HashMap<>();
+    etcTags.put("toilet", barEtc.getToilet() ? 1:0);
+    etcTags.put("parkingArea", barEtc.getParkingArea() ? 1:0);
+    etcTags.put("snack", barEtc.getSnack() ? 1:0);
     barListDTO.setEtcTags(etcTags);
 
     barListDTO.setAlcoholTags(barentity.getBarAlcohols().stream()
@@ -63,7 +63,7 @@ public class BarEntityToDTOConverter {
 
 // DTO 설정
     barListDTO.setBarRecentReviews(Collections.singletonList(barReviewDTO));
-    barListDTO.setBarImg(barReviewDTO.getBarImg());
+    if (!reviewPage.isEmpty()) barListDTO.setBarImg(barReviewDTO.getBarImg());
 
     return barListDTO;
   }

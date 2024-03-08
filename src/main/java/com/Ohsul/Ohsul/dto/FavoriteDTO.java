@@ -21,7 +21,7 @@ public class FavoriteDTO {
   private String description;
   private Double AvgScore;
 
-  private Map<String, Boolean> etcTags;
+  private Map<String, Integer> etcTags;
 
   private List<Integer> alcoholTags;
   private List<Integer> musicTags;
@@ -34,10 +34,10 @@ public class FavoriteDTO {
     this.telephone = bar.getTelephone();
     this.description = bar.getDescription();
 
-    Map<String, Boolean> etcTags = new HashMap<>();
-    etcTags.put("toilet", bar.getBarEtc().getToilet());
-    etcTags.put("parkingArea", bar.getBarEtc().getParkingArea());
-    etcTags.put("snack", bar.getBarEtc().getSnack());
+    Map<String, Integer> etcTags = new HashMap<>();
+    etcTags.put("toilet", bar.getBarEtc().getToilet() ? 1:0);
+    etcTags.put("parkingArea", bar.getBarEtc().getParkingArea() ? 1:0);
+    etcTags.put("snack", bar.getBarEtc().getSnack() ? 1:0);
     this.etcTags = etcTags;
 
     this.alcoholTags = bar.getBarAlcohols().stream()
