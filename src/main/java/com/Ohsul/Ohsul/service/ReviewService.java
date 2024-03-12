@@ -89,9 +89,12 @@ public class ReviewService {
         Optional<UserEntity> userSearch = userRepository.findByUserId(userId);
         ReviewEntity review;
         String reviewImgUrl = null;
-
-        if (reviewImg != null) reviewImgUrl = s3Service.uploadReviewImg(reviewImg);
-
+        if (reviewImg != null && !reviewImg.isEmpty()) {
+            reviewImgUrl = s3Service.uploadReviewImg(reviewImg);
+        } else {
+            // 이미지가 없을 경우 기본 이미지 URL 사용
+            reviewImgUrl = "https://ohsul.s3.ap-northeast-2.amazonaws.com/reviewImg/noimage.png";
+        }
         // 회원 리뷰 저장
         if (userSearch.isPresent()) {
             UserEntity user = userSearch.get();
@@ -175,14 +178,17 @@ public class ReviewService {
 
         String newReviewImgUrl = null;
 
-        if (reviewImg != null) {
+
+        if (reviewImg != null && !reviewImg.isEmpty()) {
             // 기존 리뷰 이미지 s3 삭제
-            s3Service.deleteReviewImg(review.getReviewImg());
+            if(review.getReviewImg() != null && !review.getReviewImg().isEmpty() && !review.getReviewImg().equals("https://ohsul.s3.ap-northeast-2.amazonaws.com/reviewImg/noimage.png")) {
+                s3Service.deleteReviewImg(review.getReviewImg());
+            }
 
             // 수정 리뷰 이미지 s3 등록
             newReviewImgUrl = s3Service.uploadReviewImg(reviewImg);
         } else {
-            newReviewImgUrl = review.getReviewImg();
+            newReviewImgUrl = "https://ohsul.s3.ap-northeast-2.amazonaws.com/reviewImg/noimage.png";
         }
         review.updateReview(barReviewDTO, newReviewImgUrl);
         reviewRepository.save(review);
